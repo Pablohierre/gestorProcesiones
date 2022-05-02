@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 		<link rel="stylesheet" href="../styles/estilos.css">
+	</head>
+
+	<body>
+		<div class="bloqueCentral">
+			<h1> Crear una Nueva Procesion </h1>
+                         <form action="#" th:action="@{/nueva}" th:object="${procesion}" method="post">
+				<div class="seccionFormulario">
+			      <label for="nombre">Nombre:</label><br>
+			      <input type="text" th:field="*{nombre}"/><br>
+			     </div>
+			    <div class="seccionFormulario">
+			      <label for="fecha">Fecha:</label><br>
+			      <input type="date"  th:field="*{fecha}"/><br>
+			    </div>
+		      	<div class="seccionFormulario">
+			      <label for="numSecciones">Número de secciones:</label><br>
+			      <input type="number" id="numSecciones" name="numSecciones" th:field="*{numSecciones}"><br>
+			    </div>
+
+		      <div class="submitFormulario">
+          <input type="submit" value="Submit">
+        </div>
+    		</form>
+		</div>
+	</body>
+</html>

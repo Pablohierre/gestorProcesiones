@@ -1,0 +1,78 @@
+@charset "utf-8";
+*{
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.titulo{
+	width: fit-content;
+	margin: auto;	
+}
+
+.contents{
+	padding: 15px;
+}
+.titulo h1{
+	font-size: 4em;
+	font-weight: 600;
+}
+.crearProcesionContainer{
+	margin-bottom: 8%;
+}
+.crearProcesion{
+	width: fit-content;
+	float: right;
+	display: inline-flex;
+	margin-right: 80px;
+}
+
+.crearProcesion img{
+	width:80px;
+	height:80px;
+	padding-left: 15px;
+}
+
+.crearProcesion p{
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+.procesiones{
+	width: 80%;
+    display: block;
+    margin: auto;
+}
+
+.procesiones p{
+	font-size: 2rem;font-weight: 600;text-decoration: underline;
+}
+
+footer{
+	height: 10%;
+	width: 100%;
+	background-color: #b50f04;
+	    bottom: 0;
+    position: fixed;
+}
+
+
+.bloqueCentral{
+	border-radius: 8px;
+    border-style: solid;
+    width: fit-content;
+    margin: auto;
+    margin-top: 20%;
+    padding: 20px;
+}
+
+
+
+.bloqueCentral .seccionFormulario{
+	margin: 15px;
+}
+
+.submitFormulario input{
+	display: block;
+	margin: auto;
+}

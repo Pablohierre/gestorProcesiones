@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 		
+ 		<styles>
+ 		</styles>
+	</head>
+
+	<body>
+            
+            <form id="formParticipacion" action="#" th:object="${participacion}" th:action="@{/nuevaParticipacion/${idprocesion}}"  method="post"> 
+                        <input  list="secciones" name="secciones"  th:field="*{idSeccion}" > 
+                        <datalist id="secciones" >
+                            <option value ="Pablo"/>
+                            <option value ="o"/>
+                            <option value ="Pabdddlo"/>
+                            <!-- <option th:each="seccion:${procesion.secciones}" value="${seccion}"> -->
+                        </datalist>
+    			<input type="text" th:field="*{tipo}" placeholder="Tipo"/>
+    			<input type="text" th:field="*{talla}" placeholder="Talla"/>
+    			<input type="text" th:field="*{tunica}" placeholder="Túnica"/>
+    			<input type="text" th:field="*{cingulo}" placeholder="Cíngulo"/>
+    			<input type="text" th:field="*{capirote}" placeholder="Capirote"/>
+
+                        
+    			
+    		</form>
+            <input type="button" value="Registrar" id="submitformularios"/>
+    	</div>	
+		
+	</body>
+
+            
+</html>

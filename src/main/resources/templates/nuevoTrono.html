@@ -1,0 +1,125 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crear Seccion de la Procesion</title>
+        <link rel="stylesheet" href="estilos.css">
+    <style>
+    	.accordion {
+			  background-color: #eee;
+			  color: #444;
+			  cursor: pointer;
+			  padding: 18px;
+			  width: 100%;
+			  border: none;
+			  text-align: left;
+			  outline: none;
+			  font-size: 15px;
+			  transition: 0.4s;
+			  border-radius: 6px;
+			}
+
+			.active, .accordion:hover {
+			  background-color: #ccc; 
+			}
+
+			.panel {
+			  padding: 0 18px;
+			  display: none;
+			  background-color: white;
+			  overflow: hidden;
+			}
+
+			.bloqueCentralSeccion{
+				border-radius: 8px;
+			    border-style: solid;
+			    width: 65%;
+			    margin: auto;
+			    margin-top: 10%;
+			    padding: 20px;
+			}
+
+			.siguiente{
+				border-radius: 8px;
+			    border-style: solid;
+			    width: fit-content;
+			    float: right;
+			    margin-top: 15%;
+			    margin-right: 5%;
+			    padding: 10px;
+			}
+
+			input{
+				margin: 15px;
+			}
+
+			h1{
+				margin-top: 10%;
+			}
+
+    </style>
+</head>
+
+<body>
+	<div class="titulo">
+	<h1 th:text="'Tronos de la '+${procesion.nombre}"> Tronos de la Procesion {nombreProcesion} </h1>
+	</div>
+	<div class="bloqueCentralSeccion" th:each="seccion:${secciones}">
+		<button class="accordion" th:text="'Trono de la seccion '+${seccion.nombre}">Trono de la Seccion {nombreSeccion} </button>
+			<div class="panel">
+
+			  <form action="/" th:action="@{/crearTronos/{idseccion} (idseccion=${seccion.id})}" th:object="${trono}" method="post">
+			  	<label> <Strong> Nombre </Strong> </label>
+			  	<input type="text" th:field="*{nombre}"/>
+			  	<label> <Strong> Nº Varales </Strong> </label>
+			  	<input type="text" th:field="*{numVarales}"> 
+			  	<label> <Strong> Peso Total </Strong> </label>
+			  	<input type="text" th:field="*{peso}"> 
+			  	<label> <Strong> Portadores Varales Externos </Strong> </label>
+			  	<input type="text" th:field="*{PortadoresVExternos}"> 
+                                <label> <Strong> Portadores Varales Internos </Strong> </label>
+			  	<input type="text" th:field="*{PortadoresVInternos}"> 
+                                <label> <Strong> Puesto de comienzo de la mesa </Strong> </label>
+			  	<input type="text" th:field="*{puestoComienzoMesa}"> 
+                                <label> <Strong> Puesto de final de la mesa </Strong> </label>
+			  	<input type="text" th:field="*{puestoFinalMesa}"> 
+
+			  	<br>
+			  <!--	<label> <Strong> Submarino </Strong> </label> <br>
+				  		<input type="checkbox" id="true" name="si" value="True">
+					  	<label for="true"> Utilizar puestos de la mesa </label>
+					  	-->
+			  	<label> <Strong> Observaciones </Strong> </label> <br>
+			  	<textarea rows="4" cols="80" name="comment" form="formularioSeccion"></textarea><br>
+				<input type="submit" value="Crear Trono">
+			  </form>
+			  
+			  
+			</div>
+
+	</div>
+	<div class="siguiente">
+            <a href="/admin">
+			<p style="display: inline"> Finalizar </p>
+			<img src="../img/right-arrow.png" alt="siguiente" style="height: 64px";>
+            </a>
+		</div>
+</body>
+		<script>
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+
+		for (i = 0; i < acc.length; i++) {
+		  acc[i].addEventListener("click", function() {
+		    this.classList.toggle("active");
+		    var panel = this.nextElementSibling;
+		    if (panel.style.display === "block") {
+		      panel.style.display = "none";
+		    } else {
+		      panel.style.display = "block";
+		    }
+		  });
+		}
+		</script>
+
+</html>

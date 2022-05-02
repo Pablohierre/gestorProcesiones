@@ -1,0 +1,121 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crear Seccion de la Procesion</title>
+        <link rel="stylesheet" href="estilos.css">
+    <style>
+    	.accordion {
+			  background-color: #eee;
+			  color: #444;
+			  cursor: pointer;
+			  padding: 18px;
+			  width: 100%;
+			  border: none;
+			  text-align: left;
+			  outline: none;
+			  font-size: 15px;
+			  transition: 0.4s;
+			  border-radius: 6px;
+			}
+
+			.active, .accordion:hover {
+			  background-color: #ccc; 
+			}
+
+			.panel {
+			  padding: 0 18px;
+			  display: none;
+			  background-color: white;
+			  overflow: hidden;
+			}
+
+			.bloqueCentralSeccion{
+				border-radius: 8px;
+			    border-style: solid;
+			    width: 65%;
+			    margin: auto;
+			    margin-top: 10%;
+			    padding: 20px;
+			}
+
+			.siguiente{
+				border-radius: 8px;
+			    border-style: solid;
+			    width: fit-content;
+			    float: right;
+			    margin-top: 15%;
+			    margin-right: 5%;
+			    padding: 10px;
+			}
+
+			input{
+				margin: 15px;
+			}
+
+			h1{
+				margin-top: 10%;
+			}
+
+    </style>
+</head>
+
+<body>
+	<div class="titulo">
+	<h1  th:text="'Tramos de la '+ ${procesion.nombre}">  Tramos de la procesion </h1>
+	</div>
+	<div class="bloqueCentralSeccion" th:each="seccion:${seccionesProcesion}" >
+           
+            <h2 th:text="'Tramos de la '+ ${seccion.nombre}"></h2>
+            
+            <div th:each="tramo:${seccion.tramos}" class="contenidoacordeon">
+		<button class="accordion">Editar Tramos </button>
+			
+                <div class="panel" >
+
+			  <form action="#" th:action="@{/crearTramos/{id}(id=${seccion.id})}" th:object="${tramo}" method="post">
+                       
+			  	<label> <Strong> Nombre </Strong> </label>
+			  	<input type="text" th:field="*{nombre}"/>
+			  	<label> <Strong> Nº de filas </Strong> </label>
+			  	<input type="text" th:field="*{numFilas}"> 
+			  	<label> <Strong> Participantes por fila </Strong> </label>
+			  	<input type="text" th:field="*{tramoscol}"> <br>
+			  	<label> <Strong> Tipo de participantes </Strong> </label> <!-- INCLUIR ENSERES EN TIPO DE PARTICIPANTES: GUIÓN, CIRIALES, PERTIGA.... -->
+			  	<input type="text" th:field="*{tipoParticipantes}"> 
+			  				  	<br>
+			  	<label> <Strong> Observaciones </Strong> </label> <br>
+			  	<textarea rows="4" cols="80" name="comment" form="formularioSeccion"></textarea><br>
+				<input type="submit" value="Crear Tramo">
+			  </form>
+			  
+			  
+			</div>
+
+            </div>
+        </div>
+	<div class="siguiente">
+            <a th:href="@{/crearTronos/{id}(id=${procesion.id})}">
+			<p style="display: inline"> Crear Tronos </p>
+			<img src="../img/right-arrow.png" alt="siguiente" style="height: 64px";>
+            </a>
+		</div>
+</body>
+		<script>
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+
+		for (i = 0; i < acc.length; i++) {
+		  acc[i].addEventListener("click", function() {
+		    this.classList.toggle("active");
+		    var panel = this.nextElementSibling;
+		    if (panel.style.display === "block") {
+		      panel.style.display = "none";
+		    } else {
+		      panel.style.display = "block";
+		    }
+		  });
+		}
+		</script>
+
+</html>
