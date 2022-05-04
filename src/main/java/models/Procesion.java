@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,10 +45,10 @@ public class Procesion implements Serializable {
 //    @JoinColumn(name = "idprocesion")
 //    private List <Seccion> secciones;
     
-    @OneToMany(mappedBy="idProcesion")
+    @OneToMany(mappedBy="idProcesion", fetch = FetchType.LAZY)
     private List <Seccion> secciones;
     
-    @OneToMany(mappedBy="idProcesion")
+    @OneToMany(mappedBy="idProcesion", fetch = FetchType.LAZY)
     private List <Participacion> participaciones;
     
 

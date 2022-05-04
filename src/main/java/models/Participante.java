@@ -53,11 +53,7 @@ public class Participante implements Serializable{
     
     @Column(name = "fechahermano", nullable = true)
    private Date fechaHermano;
-    
-   
-    
-   
-   
+       
    
    @OneToMany(mappedBy="idParticipante")
    private List <Participacion> participaciones;

@@ -24,7 +24,7 @@ import lombok.Data;
 
 @Entity
 @Table(name = "participaciones")
-@Data
+
 public class Participacion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,10 +50,13 @@ public class Participacion implements Serializable {
       
     @OneToOne //UNA PARTICIPACION SOLO PUEDE TENER UNA SECCION
     @JoinColumn(name = "idseccion", referencedColumnName = "id") //Nombre de la columna de la tabla secciones
-    private Seccion idSeccion; //FK   
+    private Seccion idSeccion; //FK 
+    
+    @Column(name = "nombreseccion", nullable = true)
+    private String nombreSeccion;
 
     
-     @Column(name = "talla", nullable = false)
+     @Column(name = "talla", nullable = true)
    private int talla;
     
     @Column(name = "tunica", nullable = false)
@@ -65,7 +68,19 @@ public class Participacion implements Serializable {
     @Column(name = "capirote", nullable = false)
    private String capirote;
     
+    @Column(name = "modosolicitud", nullable = false)
+    private String modoSolicitud; //ONLINE VS PRESENCIAL
+    
+     
+    @Column(name = "estado", nullable = false)
+    private String estado; //PENDIENTE VS APROBADO
+    
     public Participacion() {
+    }
+
+    @Override
+    public String toString() {
+        return "Participacion{" + "id=" + id + ", tipo=" + tipo + ", codPuesto=" + codPuesto + ", fecha=" + fecha + ", nombreSeccion=" + nombreSeccion + ", talla=" + talla + ", tunica=" + tunica + ", cingulo=" + cingulo + ", capirote=" + capirote + ", modoSolicitud=" + modoSolicitud + ", estado=" + estado + '}';
     }
     
        
@@ -78,6 +93,118 @@ public class Participacion implements Serializable {
         this.tipo = tipo;
         this.codPuesto = codPuesto;
     }   
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getCodPuesto() {
+        return codPuesto;
+    }
+
+    public void setCodPuesto(String codPuesto) {
+        this.codPuesto = codPuesto;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Procesion getIdProcesion() {
+        return idProcesion;
+    }
+
+    public void setIdProcesion(Procesion idProcesion) {
+        this.idProcesion = idProcesion;
+    }
+
+    public Participante getIdParticipante() {
+        return idParticipante;
+    }
+
+    public void setIdParticipante(Participante idParticipante) {
+        this.idParticipante = idParticipante;
+    }
+
+    public Seccion getIdSeccion() {
+        return idSeccion;
+    }
+
+    public void setIdSeccion(Seccion idSeccion) {
+        this.idSeccion = idSeccion;
+    }
+
+    public String getNombreSeccion() {
+        return nombreSeccion;
+    }
+
+    public void setNombreSeccion(String nombreSeccion) {
+        this.nombreSeccion = nombreSeccion;
+    }
+
+    public int getTalla() {
+        return talla;
+    }
+
+    public void setTalla(int talla) {
+        this.talla = talla;
+    }
+
+    public String getTunica() {
+        return tunica;
+    }
+
+    public void setTunica(String tunica) {
+        this.tunica = tunica;
+    }
+
+    public String getCingulo() {
+        return cingulo;
+    }
+
+    public void setCingulo(String cingulo) {
+        this.cingulo = cingulo;
+    }
+
+    public String getCapirote() {
+        return capirote;
+    }
+
+    public void setCapirote(String capirote) {
+        this.capirote = capirote;
+    }
+
+    public String getModoSolicitud() {
+        return modoSolicitud;
+    }
+
+    public void setModoSolicitud(String modoSolicitud) {
+        this.modoSolicitud = modoSolicitud;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
       
       
 }

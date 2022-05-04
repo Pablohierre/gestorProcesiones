@@ -46,7 +46,7 @@ public class NuevoParticipanteController implements Serializable {
     @GetMapping("nuevoParticipante/{id}")
     public String nuevoParticipante(Model model, @ModelAttribute Procesion p){
         
-        System.out.println(p.toString());
+        System.out.println("nuevo participante. Procesion "+p.toString());
         
         List<Seccion> secciones = new ArrayList<>();
         secciones = secrep.findByidProcesion(p);
@@ -69,71 +69,87 @@ public class NuevoParticipanteController implements Serializable {
     @PostMapping("nuevoParticipante/{id}")
     public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @ModelAttribute Procesion pro){
         System.out.println("Entra en el metodo anadirNuevoParticipante");
-//        Procesion procesion = reppro.getById(pro.getId());
-//        nuevaProcesion = procesion; //le asigno a la variable global el objeto procesion que ha entrado en el metodo, para que luego se la pueda pasar al metodo que guarda las participaciones       
         System.out.println("El valor de la variable global es "+ nuevaProcesion.toString());
         
         if(repparticipante.findFirstByDni(p.getDni())==null){ //Si el participante no existe ya en la BD, lo persisto 
             System.out.println("Participante nuevo");
             repparticipante.save(p);             
-                            
-        }else if (repparticipante.findFirstByDni(p.getDni())!=null){ 
-            
+               System.out.println("Participante guardado: "+p);             
+        }else if (repparticipante.findFirstByDni(p.getDni())!=null){          
             System.out.println("Participante antiguo");
         };   
-        nuevoParticipante = p; //le asigno a la variable global el objeto participante que ha entrado en el metodo, para que luego se la pueda pasar al metodo que guarda las participaciones
-        model.addAttribute("participante", p); //LE PASO UN PARTICIPANTE VACÍO A LA PLANTILLA PARA QUE LO PUEDA RELLENAR EN EL FORMULARIO
-        model.addAttribute("procesion", nuevaProcesion);
         
-    return "nuevoParticipante.html";//+pro.getId()+"/";
+
+        nuevoParticipante = repparticipante.findFirstByDni(p.getDni());; //le asigno a la variable global el objeto participante que ha entrado en el metodo, para que luego se la pueda pasar al metodo que guarda las participaciones
+        
+        
+        
+        
+        System.out.println("Valor de la variable global: "+ nuevoParticipante);
+        model.addAttribute("participante", nuevoParticipante); //LE PASO UN PARTICIPANTE VACÍO A LA PLANTILLA PARA QUE LO PUEDA RELLENAR EN EL FORMULARIO
+        model.addAttribute("procesion", nuevaProcesion);
+        model.addAttribute("participacion", par);
+        
+    return "nuevoParticipante.html";
     }
     
     
     
-    @PostMapping("/nuevaParticipacion/")//{idprocesion}
-    public String crearNuevaParticipacion(Model model,  Participacion par){
+    @PostMapping("/nuevaParticipacion/presencial/{idParticipante}")//{idprocesion}
+    public String crearNuevaParticipacion(Model model,  Participacion par, @PathVariable Long idParticipante){
             System.out.println("Entrando en el metodo nuevaParticipacion");
-            
-            //System.out.println("El valor de nuevoParticipante es: "+nuevoParticipante.toString());
             System.out.println("El valor de nuevaProcesion es: "+nuevaProcesion.toString());
         
-            par.setIdParticipante(nuevoParticipante); // Le asigno a la participacion el id del participante que acabo de persistir y que me viene de la variable global seteada por el metodo anadirNuevoParticipante
+            String nombreSeccion = par.getNombreSeccion(); //Recojo el nombre de seccion indicado en el formulario
+            Seccion seccion = secrep.findByIdProcesionAndName(nuevaProcesion, nombreSeccion);
+            System.out.println("Seccion encontrada: "+seccion);
+            par.setIdSeccion(seccion);
+
+            Participante p = repparticipante.getById(idParticipante);
+            System.out.println(p);
+            par.setIdParticipante(p); // Le asigno a la participacion el id del participante que acabo de persistir y que me viene de la variable global seteada por el metodo anadirNuevoParticipante
             par.setIdProcesion(nuevaProcesion); // Le asigno a la participacion el id de la procesion, que me viene de la variable global seteada por el metodo anadirNuevoParticipante
+            par.setModoSolicitud("presencial");
+            par.setEstado("aprobado");
+            
+            
             System.out.println("Participación: "+par.toString());
             
             repparticipacion.save(par); //persisto la participación
-    
-//            System.out.println("El valor de idparticipante de la nueva participacion es: "+par.getIdParticipante().toString());
-//            System.out.println("El valor de idparticipante de la nueva participacion es: "+par.getIdProcesion().toString());
         
-    return "/procesion/"+nuevaProcesion.getId();
+    return "redirect:/procesion/"+nuevaProcesion.getId();
     }
     
     
-    @PostMapping("/nuevaParticipacion/{idProcesion}/{idParticipante}")
-    public String crearNuevaParticipacionUser(Model model,  Participacion par, @PathVariable Long idProcesion, @PathVariable Long idParticipante){
+    @PostMapping("nuevaParticipacion/registro-online/{idprocesion}/{idparticipante}")
+    public String crearNuevaParticipacionUser(Model model,  Participacion par, @PathVariable Long idprocesion, @PathVariable Long idparticipante){
             System.out.println("Entrando en el metodo nuevaParticipacion");
             
-            Procesion procesion = reppro.getById(idProcesion);
-            Participante participante = repparticipante.getById(idParticipante);
-            System.out.println("El valor de nuevaProcesion es: "+nuevaProcesion.toString());
+            Procesion procesion = reppro.getById(idprocesion);
+            Participante participante = repparticipante.getById(idparticipante);
+//            System.out.println("El valor de nuevaProcesion es: "+nuevaProcesion.toString());
+            
+            String nombreSeccion = par.getNombreSeccion(); //Recojo el nombre de seccion indicado en el formulario
+            Seccion seccion = secrep.findByIdProcesionAndName(procesion, nombreSeccion);
+            System.out.println("Seccion encontrada: "+seccion);
+            par.setIdSeccion(seccion);
         
             par.setIdParticipante(participante); // Le asigno a la participacion el participante que ha entrado por parametro en la URL
             par.setIdProcesion(procesion); // Le asigno a la participacion la procesion que ha entrado por parametro de la URL
-            System.out.println("Participación: "+par.toString());
+            par.setModoSolicitud("online");
+            par.setEstado("pendiente");
+            par.setTunica("0");
+            par.setCingulo("0");
+            par.setCapirote("0");
             
+            
+            
+//            System.out.println("Participación: "+par.toString());            
             repparticipacion.save(par); //persisto la participación
-    
-//            System.out.println("El valor de idparticipante de la nueva participacion es: "+par.getIdParticipante().toString());
-//            System.out.println("El valor de idparticipante de la nueva participacion es: "+par.getIdProcesion().toString());
         
-    return "/procesion/"+procesion.getId();
+    return "redirect:/procesionesActivas/"+participante.getId();
     }
-    
-    
-    
-    
-    
+        
     
     @PostMapping("buscarParticipante/{id}")
     public String buscarParticipante(Model model, Participante p, Participacion participacion, @ModelAttribute Procesion procesion){

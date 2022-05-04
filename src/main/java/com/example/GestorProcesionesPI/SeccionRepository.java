@@ -24,5 +24,8 @@ public interface SeccionRepository extends JpaRepository<Seccion, Long> {
     // Seccion findByIdProcesion(Long id);
     
     List<Seccion> findByidProcesion(Procesion idprocesion);
+    
+    @Query("select s from Seccion s where s.idProcesion=?1 and s.nombre=?2")
+    Seccion findByIdProcesionAndName(Procesion idprocesion, String nombre);
 
 }

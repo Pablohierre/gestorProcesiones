@@ -47,15 +47,15 @@ public class LoginController implements Serializable {
        if(comparador.getTipo()=="admin"){
            System.out.println("tipo admin");
            
-          return "redirect:/admin";
+          retornar= "Principal.html";
            
        } else if (comparador.getTipo()=="user"){
            System.out.println("tipo user");
           
-           return "redirect:/procesionesActivas/"+comparador.getId();
+           retornar= "redirect:/procesionesActivas/"+comparador.getId();
        }
         System.out.println("retornando "+ retornar);
-       return "";
+       return retornar;
     }
     
 }

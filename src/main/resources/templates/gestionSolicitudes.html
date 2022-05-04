@@ -1,0 +1,95 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Participante</title>
+        <!-- <link rel="stylesheet" href="estilos.css"> --> 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        
+    <style>
+    	.titulo{
+    		margin: 20px 0px 25px 30px;
+    	}
+
+    	.listaSolicitudes{
+    		width: 70%;
+    		margin: auto;
+    	}
+
+    	table .botonera{
+    		float: right;
+    	}
+
+    	.botonera button{
+    		border-radius: 3px;
+    	}
+
+    	#aceptar{
+    		background-color: #019446;
+    		color: white;
+    	}
+
+    	#rechazar{
+    		background-color: #c42406;
+    		color: white;
+    	}
+    	#espera{
+    		background-color: #ba5c04;
+    		color: white;
+    	}
+
+
+    </style>
+</head>
+
+<body>
+	<div class="titulo">
+		<h1> Reservas Online </h1>
+                <p> Aprueba, rechaza o añade a la lista de espera las solicitudes para participar en la procesión </p>
+	</div>
+
+	<div class="listaSolicitudes">
+		<table class="table hover-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Solicitante</th>
+					<th>Seccion</th>
+					<th>Tipo</th>
+				</tr>
+			</thead>
+			<tbody>
+                            <tr th:each="solicitud:${solicitudes}"
+                                th:onclick="'javascript:rowClicked(\'' + ${solicitud.idParticipante.id} + '\');'">
+                                   
+					<td th:text="${solicitud.id}"> 2 </td>
+					<td th:text="${solicitud.idParticipante.nombre}+' '+${solicitud.idParticipante.apellidos}"> 10 </td>
+					<td th:text="${solicitud.nombreSeccion}"> 10 </td>
+					<td th:text="${solicitud.tipo}"> Portador </td>
+					<td  class="botonera">
+                                            <button id="rechazar">  <a th:href="@{/gestionarSolicitudesOnline/rechazar/{idParticipacion} (idParticipacion=${solicitud.id})}"> Rechazar </a> </button> 
+                                            <a th:href="@{/gestionarSolicitudesOnline/aceptar/{idParticipacion}(idParticipacion=${solicitud.id})}">  <button id="aceptar"> Aceptar </button>   </a>
+                                            <a th:href="@{/gestionarSolicitudesOnline/espera/{idParticipacion}(idParticipacion=${solicitud.id})}"> <button id="espera"> Añadir a lista de espera </button>  </a>
+					<td>
+				</tr>
+
+			</tbody>
+		</table>
+
+                  
+
+	</div>
+		
+
+	
+	
+		
+	
+</body>
+		<script>
+        function rowClicked(value) {
+            location.href = "/participante/" + value;
+        }
+    </script>
+
+</html>
