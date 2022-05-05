@@ -5,13 +5,20 @@
 package com.example.GestorProcesionesPI;
 
 import java.util.ArrayList;
+import java.util.List;
+import models.Participacion;
 import models.Procesion;
+import models.Seccion;
+import models.Tramo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -44,5 +51,18 @@ public class PrincipalController {
         model.addAttribute("activas",procesionesActivas);
         model.addAttribute("pasadas",procesionesPasadas);
         return "Principal.html";
+    }
+    
+    
+    @PostMapping("/eliminarProcesion/{idProcesion}")
+    public String eliminarProcesion(Model model, @PathVariable Long idProcesion){
+        Procesion procesion = reppro.getById(idProcesion);
+        List <Seccion> secciones = procesion.getSecciones();
+        List <Tramo> tramos = new ArrayList<>();
+        List <Participacion> participaciones = new ArrayList <>();
+        
+        reppro.delete(procesion);
+        
+        return "redirect:/admin";
     }
 }

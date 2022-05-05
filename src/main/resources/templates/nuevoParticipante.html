@@ -58,17 +58,19 @@
                         <input type="submit" value="submit">
     			
            
-                        <!-- <input type="button" value="Registrar" id="submitformularios"/> -->
+                         <input type="button" value="Registrar" id="submitformularios" onclick="submitForms()"/> 
                          </form>
     	</div>	
 		
 	</body>
         <script>
-          var botonsubmit = document.getElementById("submitformularios").addEventListener( 'click', function () {
-              
-              document.getElementById(formParticipante).submit(); //ANTES DE CREAR HAY QUE COMPROBAR QUE NO EXISTA YA. SI EXISTE PERO TIENE DATOS ACTUALIZADOS HABRÍA QUE SOBREESCRIBIR
-             // document.getElementById(formParticipacion).submit();    
-          });
+          //var botonsubmit = document.getElementById("submitformularios").addEventListener( 'click', function () {
+             
+            submitForms = function(){
+                console.log("Clic registrado");
+              document.getElementById("formParticipante").submit(); //ANTES DE CREAR HAY QUE COMPROBAR QUE NO EXISTA YA. SI EXISTE PERO TIENE DATOS ACTUALIZADOS HABRÍA QUE SOBREESCRIBIR
+              document.getElementById("formParticipacion").submit();    
+          }
             
             
             

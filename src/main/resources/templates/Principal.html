@@ -58,8 +58,8 @@
                                 <td th:text="${procesion.fecha}">null</td>
                                 <td th:text="${procesion.numSecciones}">null</td>
                                 <td  class="botonera">
-                                            <form action="#" th:action="@{#}" th:object="${procesion}" method="delete">
-                                            <button type="submit" class="btn" id="rechazar">Eliminar</button>
+                                            <form action="#" th:action="@{eliminarProcesion/{id} (id=${procesion.id})}" th:object="${procesion}" method="post">
+                                                <button type="submit" class="btn" id="rechazar">Eliminar</button>
                                             </form>                                           
 					<td>
                               </tr>
