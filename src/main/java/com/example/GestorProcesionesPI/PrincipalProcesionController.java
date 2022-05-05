@@ -41,10 +41,11 @@ public class PrincipalProcesionController implements Serializable {
     public String datosProcesion(Model model, @PathVariable Long id){
         System.out.println("Entra en el metodo datosProcesion");
         Procesion procesion = reppro.getById(id); 
-        List <Participacion> participaciones =  reppart.findByIdProcesion(procesion);
+        
+        List <Participacion> participaciones =  reppart.findApplicationsByStatus("aprobado", procesion);
         List <Seccion> secciones = repsec.findByidProcesion(procesion);
         List <Tramo> tramos = new ArrayList<>();
-        List<Participante> participantesProcesion =new ArrayList<>();
+        List <Participante> participantesProcesion =new ArrayList<>();
         
         
         
@@ -56,7 +57,10 @@ public class PrincipalProcesionController implements Serializable {
         
         for(Participacion p:participaciones){
             participantesProcesion.add(p.getIdParticipante());
+
         }
+
+         
         
         
                

@@ -60,13 +60,7 @@ public class NuevaSeccionController implements Serializable {
          Procesion ultimaCreada = reppro.findLastRecordInserted(); 
 //         seccion.setIdProcesion(ultimaCreada); //LE ASIGNO A LA SECCION EL IDPROCESION DE LA PROCESION DE LA QUE FORMA PARTE
                
-//        List <Seccion> secciones = new ArrayList<>();
-//        secciones = ultimaCreada.getSecciones();
-//        secciones.add(seccion);
-//        ultimaCreada.setSecciones(secciones);
-
-          seccion.setIdProcesion(ultimaCreada);
-        
+        seccion.setIdProcesion(ultimaCreada); 
 
         repsec.save(seccion);//GUARDO LA SECCION EN BASE DE DATOS
          
@@ -80,36 +74,8 @@ public class NuevaSeccionController implements Serializable {
 //         
          return "nuevaSeccion.html";
          
-//         System.out.println("Introduciendo la seccion "+seccion.toString());
-//         System.out.println("Valor del contador "+numSeccionesGuardadas);
-//         
-//         seccionesProcesion.set(numSeccionesGuardadas, seccion); //cada vez que se llama el método, se iguala una de las secciones en el array global con los datos que le llegan al método
-//         numSeccionesGuardadas=+1;
-//         
-//         if(numSeccionesGuardadas == seccionesProcesion.size()){ //SOLO CUANDO YA SE HAN RELLENADO LOS DATOS DE TODAS LAS SECCIONES DEL ARRAY, SE VAN PERSISTIENDO TODAS, UNA A UNA
-//             for(Seccion s:seccionesProcesion){
-//                 s.setIdProcesion(ultimaCreada);
-//                 repsec.save(s);
-//             }
-//         }
-         
-         
-//         
-//         
-//         System.out.println("datos de la seccion a guardar:"+seccion.toString());         
-//        //IMPLEMENTAR MODAL DE GUARDADO CON ÉXITO (ESTE MÉTODO NO REDIRECCIONA Y EL USUARIO DEBE SABER QUE SE HA GUARDADO ANTES DE CONTINUAR)
-//        
-//         for(Seccion s:seccionesProcesion){
-//             if(s.getNombre()==null){
-//                 
-//                 s.setNombre(seccion.getNombre());
-//                 s.setNumTramos(seccion.getNumTramos());
-//                 s.setTronoSiNo(seccion.isTronoSiNo());
-//                 break;
-//             }
-//         }
-//         
-//         
+
+
        
          
          

@@ -15,11 +15,11 @@
 			     </div>
 			    <div class="seccionFormulario">
 			      <label for="fecha">Fecha:</label><br>
-			      <input type="date"  th:field="*{fecha}"/><br>
+			      <input type="date" id="datefield" min='1899-01-01' th:field="*{fecha}"/><br>
 			    </div>
 		      	<div class="seccionFormulario">
 			      <label for="numSecciones">Número de secciones:</label><br>
-			      <input type="number" id="numSecciones" name="numSecciones" th:field="*{numSecciones}"><br>
+			      <input type="number" id="numSecciones" name="numSecciones" min="1" th:field="*{numSecciones}"><br>
 			    </div>
 
 		      <div class="submitFormulario">
@@ -28,4 +28,26 @@
     		</form>
 		</div>
 	</body>
+        
+        <script>
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+               dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+               mm = '0' + mm;
+            } 
+
+            today = yyyy + '-' + mm + '-' + dd;
+            document.getElementById("datefield").setAttribute("min", today);
+            
+            
+            
+            document.getElementById("numSecciones").defaultValue = "1";
+        </script>
 </html>

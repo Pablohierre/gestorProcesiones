@@ -102,20 +102,7 @@
 
 		</div>
 
-		<!--<div class="campos">
-			<p> Nombre: Pablo </p>
-			<p> Apellidos: Hierrezuelo Muñoz </p>
-			<p> Fecha de nacimiento: 02/10/1997 </p>
-			<p> Nº de teléfono: 680105400 </p>
-			
-		</div>
 
-		<div class="campos">
-			<p> Direccion </p>
-			<p>fecha de alta </p>
-			<p> email </p>
-			<p> DNI </p>
-		</div>-->
 	</div>
 	<div class="participaciones">
 		<h2> Participaciones </h2>
@@ -123,47 +110,33 @@
 	<table class="table table-hover">
 		<thead>
 			<th> ID </th>
-			<th> ID Procesión </th>			
+			<th> Procesión </th>
+                        <th> Fecha </th>
+                        <th> Sección </th>
 			<th> Tipo </th>
 			<th> Puesto </th>
-			<th> ID Sección </th>
-		</thead>
-		<tbody>
-			<tr th:each="participacion:${participaciones}">
-				<td th:text="participacion.id"> 1</td>
-				<td>10</td>
-				<td th:text="participacion.tipo">Portador</td>
-				<td th:text="participacion.puesto">CA05</td>
-				<td>1</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>10</td>
-				<td>Portador</td>
-				<td>CA05</td>
-				<td>1</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>10</td>
-				<td>Portador</td>
-				<td>CA05</td>
-				<td>1</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>10</td>
-				<td>Portador</td>
-				<td>CA05</td>
-				<td>1</td>
-			</tr>
-		</tbody>
-</table>
-	</div>
-	
+			
+                        </thead>
+                        <tbody>
+                            <tr th:each="participacion:${participaciones}"
+                                th:onclick="'javascript:rowClicked(\'' + ${participacion.id} + '\');'">
+                                <td th:text="${participacion.id}"> 1</td>
+                                <td th:text="${participacion.idProcesion.nombre}">10</td>
+                                <td th:text="${participacion.idProcesion.fecha}">10</td>
+                                <td th:text="${participacion.idSeccion.nombre}">10</td>
+                                <td th:text="${participacion.tipo}">Portador</td>
+                                <td th:text="${participacion.codPuesto}">CA05</td>
+
+                            </tr>
+                        </tbody>
+        </table>
+        </div>
+
 </body>
-		<script>
-		
-		</script>
+<script>
+    function rowClicked(value) {
+                location.href = "/editarParticipacion/" + value;
+            }		
+</script>
 
 </html>

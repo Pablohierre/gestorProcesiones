@@ -72,9 +72,11 @@
 
 			  <form action="#" th:action="@{/crearSecciones/}" th:object="${seccion}" method="post" id="formularioSeccion" class="form">
 			  	<label> <Strong> Nombre </Strong> </label>
-			  	<input type="text" th:field="*{nombre}" th:value=null /> <!--th:value="${secciones.nombre}"-->
+			  	<input type="text" th:field="*{nombre}" class="input" th:value=null required id="nombreTramo"/> <!--th:value="${secciones.nombre}"-->
+                                
 			  	<label> <Strong> Número de tramos </Strong> </label>
-                                <input type="text" th:field="*{numTramos}" th:value=null > <br><!--<!-- th:value="${secciones.numTramos}" -->
+                                <input type="number" th:field="*{numTramos}" class="input" min="1" th:value=null required id="numTramos"> <br><!--<!-- th:value="${secciones.numTramos}" -->
+                                
 			  	<label> <Strong> Trono </Strong> </label> <br>
 				  		<input type="checkbox" th:field="*{tronoSiNo} " id="true" name="si" value="True"> <!-- th:value="${secciones.tronoSiNo}"-->
 					  	<label for="true"> Esta sección llevará un trono</label>
@@ -111,18 +113,10 @@
 		  });
 		}
                 
-              
+              document.getElementById("numTramos").defaultValue = "1";
+              document.getElementById("nombreTramo").defaultValue = "";
                 
-                /*
-                document.getElementById( 'btnsubmit' ).addEventListener( 'click', function () {
-                    var elms=document.forms;
-                   for( var index = 0; index < elms.length; index++ ) {
-                       console.log("Entra en el bucle for, indice "+index)
-                       document.forms[index].submit();
-                    };
-                } );
-                
-               */
+               
 		</script>
 
 </html>

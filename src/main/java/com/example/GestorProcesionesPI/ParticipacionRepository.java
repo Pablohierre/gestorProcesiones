@@ -23,5 +23,8 @@ public interface ParticipacionRepository extends JpaRepository<Participacion, Lo
    
    @Query("Select p from Participacion p where p.modoSolicitud =?1 and p.estado=?2 and p.idProcesion=?3")
    List <Participacion> findOnlineApplicationsByStatus(String modo, String status, Procesion procesion);
+   
+   @Query("Select p from Participacion p where p.estado=?1 and p.idProcesion=?2")
+   List <Participacion> findApplicationsByStatus( String status, Procesion procesion);
     
 }

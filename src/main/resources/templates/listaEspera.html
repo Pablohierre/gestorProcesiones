@@ -56,14 +56,7 @@
 <body>
 	<div class="titulo">
             <div class="inicio">
-				<h1> Reservas Online </h1>
-                <p> Aprueba, rechaza o añade a la lista de espera las solicitudes para participar en la procesión </p>
-
-            </div>
-            <div class="btnlista">
-                <a th:href="@{/gestionarSolicitudesOnline/{id}/espera(id=${procesion.id})}">
-            	<button id="espera"> Ver lista de espera </button>
-                </a>
+				<h1> Lista de espera </h1>
             </div>
            
 	</div>
@@ -87,16 +80,9 @@
 					<td th:text="${solicitud.nombreSeccion}"> 10 </td>
 					<td th:text="${solicitud.tipo}"> Portador </td>
 					<td  class="botonera">
-                                            <form action="#" th:action="@{/gestionarSolicitudesOnline/rechazar/{idParticipacion}(idParticipacion=${solicitud.id})}" th:object="${solicitud}" method="post">
-                                            <button type="submit" class="btn" id="rechazar">Rechazar</button>
-                                            </form>
-                                            
+                                                                                      
                                             <form action="#" th:action="@{/gestionarSolicitudesOnline/aprobar/{idParticipacion}(idParticipacion=${solicitud.id})}" th:object="${solicitud}" method="post">
                                             <button type="submit" class="btn" id="aceptar">Aceptar</button>
-                                            </form>
-                                            
-                                            <form action="#" th:action="@{/gestionarSolicitudesOnline/espera/{idParticipacion}(idParticipacion=${solicitud.id})}" th:object="${solicitud}" method="post">
-                                            <button type="submit" class="btn" id="espera">Añadir a lista de espera</button>
                                             </form>
                                             
 					<td>

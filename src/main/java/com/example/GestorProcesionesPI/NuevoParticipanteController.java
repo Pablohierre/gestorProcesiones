@@ -64,7 +64,17 @@ public class NuevoParticipanteController implements Serializable {
         return "nuevoParticipante.html";
     }
     
-
+    @GetMapping("editarParticipacion/{idParticipacion}")
+    public String editarParticipante(Model model, @PathVariable Long idParticipacion){
+        Participacion participacion = repparticipacion.getById(idParticipacion);
+        Participante participante = participacion.getIdParticipante();
+        Procesion procesion = participacion.getIdProcesion();
+        
+        model.addAttribute("participante", participante); 
+        model.addAttribute("procesion", procesion);
+        model.addAttribute("participacion", participacion);
+        return "nuevoParticipante.html";
+    }
     
     @PostMapping("nuevoParticipante/{id}")
     public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @ModelAttribute Procesion pro){
