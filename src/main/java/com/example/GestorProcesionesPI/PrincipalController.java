@@ -30,6 +30,15 @@ public class PrincipalController {
     @Autowired
     ProcesionRepository reppro;
     
+    @Autowired
+    SeccionRepository repsec;
+    
+    @Autowired
+    TramoRepository reptramo;
+    
+    @Autowired
+    ParticipacionRepository repparticipacion;
+    
     @GetMapping("/admin")
     public String principal( Model model){ 
         long millis=System.currentTimeMillis();  
@@ -58,8 +67,22 @@ public class PrincipalController {
     public String eliminarProcesion(Model model, @PathVariable Long idProcesion){
         Procesion procesion = reppro.getById(idProcesion);
         List <Seccion> secciones = procesion.getSecciones();
-        List <Tramo> tramos = new ArrayList<>();
-        List <Participacion> participaciones = new ArrayList <>();
+        
+        for(Seccion s:secciones){
+            List <Tramo> tramos = s.getTramos();//COJO TODOS LOS TRAMOS DE ESA SECCION
+                for(Tramo t:tramos){
+                    reptramo.delete(t);// BORRO LOS TRAMOS UNO A UNO
+                    System.out.println("borrando tramo");
+                }
+            repsec.delete(s);//BORRO LA SECCION
+            System.out.println("borrando seccion");
+        }
+        
+               
+//        List <Participacion> participaciones = repparticipacion.findByIdProcesion(procesion);
+//        for(Participacion p:participaciones){
+//            repparticipacion.delete(p);
+//        }
         
         reppro.delete(procesion);
         

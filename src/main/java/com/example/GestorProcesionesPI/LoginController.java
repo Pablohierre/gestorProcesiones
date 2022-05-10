@@ -44,17 +44,33 @@ public class LoginController implements Serializable {
         System.out.println("Usuario encontrado");
         System.out.println(comparador.toString());
         
-       if(comparador.getTipo()=="admin"){
-           System.out.println("tipo admin");
-           
-          retornar= "Principal.html";
-           
-       } else if (comparador.getTipo()=="user"){
-           System.out.println("tipo user");
-          
-           retornar= "redirect:/procesionesActivas/"+comparador.getId();
-       }
-        System.out.println("retornando "+ retornar);
+        switch(comparador.getTipo()){
+            case "admin":
+                 retornar ="redirect:/admin";
+                break;
+            
+            case "user":
+                retornar ="redirect:/procesionesActivas/"+comparador.getId();
+                break;
+                
+            default:
+                retornar ="";
+        }
+        
+        
+        
+        
+//       if(comparador.getTipo()=="admin"){
+//           System.out.println("tipo admin");
+//           
+//          retornar= "Principal.html";
+//           
+//       } else if (comparador.getTipo()=="user"){
+//           System.out.println("tipo user");
+//          
+//           retornar= "redirect:/procesionesActivas/"+comparador.getId();
+//       }
+//        System.out.println("retornando "+ retornar);
        return retornar;
     }
     
