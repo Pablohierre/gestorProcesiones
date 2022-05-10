@@ -19,43 +19,36 @@
 		  </div>    
     	
     	<div class="formulario">
-    		<form action="#" th:action="@{/nuevoParticipante/{id}(id=${procesion.id})}" th:object="${participante}" method="post" id="formParticipante">
-                    <input type="text" th:field="*{nombre}" placeholder="Nombre" /> <!-- th:value="${}" -->
-                    <input type="text" th:field="*{apellidos}" placeholder="Apellidos"/>
-                    <input type="text" th:field="*{numHermano}" placeholder="Nº hermano"/>
-                    <input type="text" th:field="*{dni}" placeholder="DNI"/>
-                    <input type="text" th:field="*{telefono}" placeholder="Teléfono"/>
-                    <input type="text" th:field="*{email}" placeholder="email"/>
+    		<form action="#" th:action="@{/nuevoParticipante/{id}(id=${procesion.id})}" method="post" id="formParticipante">
+                    <input type="text" th:field="*{participante.nombre}" placeholder="Nombre" /> <!-- th:value="${}" -->
+                    <input type="text" th:field="*{participante.apellidos}" placeholder="Apellidos"/>
+                    <input type="text" th:field="*{participante.numHermano}" placeholder="Nº hermano"/>
+                    <input type="text" th:field="*{participante.dni}" placeholder="DNI"/>
+                    <input type="text" th:field="*{participante.telefono}" placeholder="Teléfono"/>
+                    <input type="text" th:field="*{participante.email}" placeholder="email"/>
                     <label for="fechanac"  value="Fecha de nacimiento"/>
-                    <input type="date" th:field="*{fechaNac}" name="fechanac"/>
+                    <input type="date" th:field="*{participante.fechaNac}" name="fechanac"/>
                     <label for="fechanac" value="Fecha de alta de hermano"/>
-                    <input type="date" th:field="*{fechaHermano}" name="fechaAlta"/>
-                    <input type="submit" value="registrar participante">                  
-                </form>
-            
-            <form id="formParticipacion" action="#" th:object="${participacion}" th:action="@{/nuevaParticipacion/presencial/{idParticipante}(idParticipante=${participante.id})}"  method="post"> 
-                <input  list="secciones"  name="secciones"  th:field="*{nombreSeccion}" placeholder="Seccion" /> <!-- type="${seccion}" -->
+                    <input type="date" th:field="*{participante.fechaHermano}" name="fechaAlta"/>
+                    <!--<input type="submit" value="registrar participante">                           -->
+                    <input  list="secciones"  name="secciones"  th:field="*{participacion.nombreSeccion}" placeholder="Seccion" /> <!-- type="${seccion}" -->
                         <datalist id="secciones" >                         
                              <option th:each="seccion:${procesion.secciones}" th:value="${seccion.nombre}"/>                                                
-                        </datalist>
-                        
-    			<input list="tipo" name="tipo" th:field="*{tipo}" placeholder="Tipo"/>
-                        
+                        </datalist>       
+    			     <input list="tipo" name="tipo" th:field="*{participacion.tipo}" placeholder="Tipo"/> 
                         <datalist id="tipo">
                             <option value="Nazareno vela"/>
                             <option value="Monaguillo"/>
                             <option value="Cirial"/>
                             <option value="Turiferario"/>
                             <option value="Portador"/>
-                        </datalist>
-                        
-                        
-    			<input type="text" th:field="*{talla}" placeholder="Talla"/>
-    			<input type="text" th:field="*{tunica}" placeholder="Túnica"/>
-    			<input type="text" th:field="*{cingulo}" placeholder="Cíngulo"/>
-    			<input type="text" th:field="*{capirote}" placeholder="Capirote"/>
+                        </datalist>                           
+        			<input type="text" th:field="*{participacion.talla}" placeholder="Talla"/>
+        			<input type="text" th:field="*{participacion.tunica}" placeholder="Túnica"/>
+        			<input type="text" th:field="*{participacion.cingulo}" placeholder="Cíngulo"/>
+        			<input type="text" th:field="*{participacion.capirote}" placeholder="Capirote"/>
 
-                        <input type="submit" value="submit">
+                    <input type="submit" value="submit">
     			
            
                          

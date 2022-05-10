@@ -4,6 +4,8 @@
  */
 package com.example.GestorProcesionesPI;
 
+import java.util.List;
+import models.Seccion;
 import models.Trono;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author hierr
  */
 public interface TronoRepository extends JpaRepository<Trono, Long> {
+    
+    Trono getByIdSeccion(Seccion seccion);
     
 }

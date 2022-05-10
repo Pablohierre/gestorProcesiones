@@ -12,6 +12,7 @@ import models.Participante;
 import models.Procesion;
 import models.Seccion;
 import models.Tramo;
+import models.Trono;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,9 @@ public class PrincipalProcesionController implements Serializable {
     @Autowired
     private TramoRepository reptram;
     
+    @Autowired
+    private TronoRepository reptrono;
+    
     @GetMapping("/procesion/{id}")           
     public String datosProcesion(Model model, @PathVariable Long id){
         System.out.println("Entra en el metodo datosProcesion");
@@ -46,18 +50,19 @@ public class PrincipalProcesionController implements Serializable {
         List <Seccion> secciones = repsec.findByidProcesion(procesion);
         List <Tramo> tramos = new ArrayList<>();
         List <Participante> participantesProcesion =new ArrayList<>();
-        
+        List <Trono> tronos = new ArrayList<>();
         
         
         for(Seccion s: secciones){
            System.out.println("Iteración");
            List <Tramo> tramosSeccion =  reptram.findByIdSeccion(s);
+           Trono trono = reptrono.getByIdSeccion(s);
            tramos.addAll(tramosSeccion);
+           tronos.add(trono);
            }
         
         for(Participacion p:participaciones){
             participantesProcesion.add(p.getIdParticipante());
-
         }
 
          
@@ -68,6 +73,7 @@ public class PrincipalProcesionController implements Serializable {
         model.addAttribute("participantes", participantesProcesion);
         model.addAttribute("secciones", secciones);
         model.addAttribute("tramos", tramos);
+        model.addAttribute("tronos", tronos);
         return "principalProcesion.html";
     }
     

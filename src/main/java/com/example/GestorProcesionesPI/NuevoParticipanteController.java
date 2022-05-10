@@ -63,18 +63,7 @@ public class NuevoParticipanteController implements Serializable {
         System.out.println("saliendo del metodo");
         return "nuevoParticipante.html";
     }
-    
-    @GetMapping("editarParticipacion/{idParticipacion}")
-    public String editarParticipante(Model model, @PathVariable Long idParticipacion){
-        Participacion participacion = repparticipacion.getById(idParticipacion);
-        Participante participante = participacion.getIdParticipante();
-        Procesion procesion = participacion.getIdProcesion();
         
-        model.addAttribute("participante", participante); 
-        model.addAttribute("procesion", procesion);
-        model.addAttribute("participacion", participacion);
-        return "nuevoParticipante.html";
-    }
     
     @PostMapping("nuevoParticipante/{id}")
     public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @ModelAttribute Procesion pro){
@@ -89,18 +78,24 @@ public class NuevoParticipanteController implements Serializable {
             System.out.println("Participante antiguo");
         };   
         
+        nuevoParticipante = repparticipante.findFirstByDni(p.getDni());; //le asigno a la variable global el objeto participante que ha entrado en el metodo, para que luego se la pueda pasar al metodo que guarda las participaciones       
+        
+        String nombreSeccion = par.getNombreSeccion(); //Recojo el nombre de seccion indicado en el formulario
+        Seccion seccion = secrep.findByIdProcesionAndName(nuevaProcesion, nombreSeccion);
+        System.out.println("Seccion encontrada: "+seccion);
+        
+        par.setIdSeccion(seccion);
+        par.setIdParticipante(nuevoParticipante); // Le asigno a la participacion el id del participante que acabo de persistir y que me viene de la variable global seteada por el metodo anadirNuevoParticipante
+        par.setIdProcesion(nuevaProcesion); // Le asigno a la participacion el id de la procesion, que me viene de la variable global seteada por el metodo anadirNuevoParticipante
+        par.setModoSolicitud("presencial");
+        par.setEstado("aprobado");
 
-        nuevoParticipante = repparticipante.findFirstByDni(p.getDni());; //le asigno a la variable global el objeto participante que ha entrado en el metodo, para que luego se la pueda pasar al metodo que guarda las participaciones
+        System.out.println("Participación: "+par.toString());
+
+        repparticipacion.save(par); //persisto la participación
+        System.out.println("Persistido con éxito");
         
-        
-        
-        
-        System.out.println("Valor de la variable global: "+ nuevoParticipante);
-        model.addAttribute("participante", nuevoParticipante); //LE PASO UN PARTICIPANTE VACÍO A LA PLANTILLA PARA QUE LO PUEDA RELLENAR EN EL FORMULARIO
-        model.addAttribute("procesion", nuevaProcesion);
-        model.addAttribute("participacion", par);
-        
-    return "nuevoParticipante.html";
+    return "redirect:/procesion/"+nuevaProcesion.getId();
     }
     
     
@@ -174,6 +169,18 @@ public class NuevoParticipanteController implements Serializable {
         model.addAttribute("procesion", nuevaProcesion);
         System.out.println("las secciones de la procesion son: "+procesion.getSecciones());
         
+        return "nuevoParticipante.html";
+    }
+    
+    @GetMapping("editarParticipacion/{idParticipacion}")
+    public String editarParticipante(Model model, @PathVariable Long idParticipacion){
+        Participacion participacion = repparticipacion.getById(idParticipacion);
+        Participante participante = participacion.getIdParticipante();
+        Procesion procesion = participacion.getIdProcesion();
+        
+        model.addAttribute("participante", participante); 
+        model.addAttribute("procesion", procesion);
+        model.addAttribute("participacion", participacion);
         return "nuevoParticipante.html";
     }
             
