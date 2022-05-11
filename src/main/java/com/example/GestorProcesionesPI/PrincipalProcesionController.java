@@ -33,6 +33,9 @@ public class PrincipalProcesionController implements Serializable {
     private ParticipacionRepository reppart;
     
     @Autowired
+    private ParticipanteRepository repparticipante;
+    
+    @Autowired
     private SeccionRepository repsec; 
     
     @Autowired
@@ -41,10 +44,13 @@ public class PrincipalProcesionController implements Serializable {
     @Autowired
     private TronoRepository reptrono;
     
+    
+    Procesion procesion;
+    
     @GetMapping("/procesion/{id}")           
     public String datosProcesion(Model model, @PathVariable Long id){
         System.out.println("Entra en el metodo datosProcesion");
-        Procesion procesion = reppro.getById(id); 
+        procesion = reppro.getById(id); 
         
         List <Participacion> participaciones =  reppart.findApplicationsByStatus("aprobado", procesion);
         List <Seccion> secciones = repsec.findByidProcesion(procesion);
@@ -52,23 +58,27 @@ public class PrincipalProcesionController implements Serializable {
         List <Participante> participantesProcesion =new ArrayList<>();
         List <Trono> tronos = new ArrayList<>();
         
-        
+        //Recorro las secciones de la procesion
         for(Seccion s: secciones){
-           System.out.println("Iteración");
-           List <Tramo> tramosSeccion =  reptram.findByIdSeccion(s);
-           Trono trono = reptrono.getByIdSeccion(s);
+           
+           List <Tramo> tramosSeccion =  reptram.findByIdSeccion(s);//Encuentro los tramos de esa seccion
+           Trono trono = reptrono.getByIdSeccion(s);//Encuentro el trono perteneciente a esa seccion
+            
+           if(trono!= null){
+            System.out.println(trono.toString());
+            trono= calcularDatos(trono);//Calculo las estadisticas de ese trono
+            tronos.add(trono);
+           }
+           
            tramos.addAll(tramosSeccion);
-           tronos.add(trono);
+           
            }
         
         for(Participacion p:participaciones){
             participantesProcesion.add(p.getIdParticipante());
         }
-
-         
         
-        
-               
+        System.out.println("Lista de tronos: "+tronos.toString());        
         model.addAttribute("procesion", procesion);
         model.addAttribute("participantes", participantesProcesion);
         model.addAttribute("secciones", secciones);
@@ -81,6 +91,47 @@ public class PrincipalProcesionController implements Serializable {
     public String procesion(Model model, @PathVariable Long id){
         
         return "principalProcesion.html";
+    }
+    
+    public Trono calcularDatos(Trono trono){
+        System.out.println("metodo calcularDatos");
+        System.out.println(trono.toString());
+        int puestosTotales = (trono.getPortadoresVExternos()*2)+ //primero calculo los portadores de los varales externos
+                            (trono.getPortadoresVInternos()*(trono.getNumVarales()-2)); //luego calculo el número de varales internos que hay y los multiplico por el numero de portadores que albergan
+        
+        //busco que puestos de ese trono hay cubiertos encontrando participaciones de tipo portador en la seccion en la que va el trono
+        Seccion seccion = trono.getIdSeccion();
+        int puestosCubiertos = reppart.findByTipoAndSeccion(seccion, "portador").size();
+        System.out.println("puestos cubiertos: "+puestosCubiertos);
+        
+        int repetidores = reppart.findByTipoAndSeccionWithMultipleParticipacion(seccion, "portador").size();
+        System.out.println("repetidores: "+repetidores);
+        
+        double tasaRepeticion = repetidores/puestosCubiertos*100;
+        System.out.println("tasa repeticion: "+tasaRepeticion);
+        
+        double talla = reppart.findAVGTallaByTipoAndSeccion(seccion, "portador");
+        System.out.println("talla media: "+talla);
+        
+        int puestosSinAsignar = reppart.findUnassignedPuestoByTipoAndSeccion(seccion, "portador");
+        
+        
+        double peso = reptrono.findPesoById(trono.getId());
+        System.out.println("Peso total: "+peso);
+        double pesoPorPortador = peso/puestosCubiertos;
+        System.out.println("p. por portador: "+pesoPorPortador);
+        
+        
+       // int numRepetidores = repparticipante.findByMultipleParticipacion().size();
+        trono.setPuestosTotales(puestosTotales);
+        trono.setPuestosCubiertos(puestosCubiertos);
+        trono.setTasaRepeticion(tasaRepeticion);
+        trono.setTallaMedia(talla);
+        trono.setPuestosPorAsignar(puestosSinAsignar);
+        trono.setPesoPorCabeza(pesoPorPortador);
+        
+        System.out.println("finaliza el calculo");
+        return trono;
     }
     
 }

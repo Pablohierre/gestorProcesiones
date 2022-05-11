@@ -254,7 +254,7 @@
                                                     </div>
                                                     <div class="bloqueDatos">
                                                             <p> Porcentaje de hermanos </p>
-                                                            <p> Media de edad </p>
+                                                            <p> Tasa de repetición </p>
                                                     </div>
                                         </tr>
                                     </table>
@@ -264,16 +264,18 @@
                                         <table>
                                             
                                         <tr th:each="trono:${tronos}">
-					<p><strong>Trono Cristo</strong><p>
+					<strong><p th:text="${trono.nombre}">Trono <p></strong>
 						<div class="bloqueDatos">
-							<p> Puestos totales </p>
-							<p> Puestos cubiertos </p>
-							<p> Media de edad </p>
+							<p th:text=" 'Puestos totales  ' + ${trono.puestosTotales}"> Puestos totales </p>
+							<p th:text=" 'Puestos cubiertos  ' + ${trono.puestosCubiertos}"> Puestos cubiertos </p>
+							<p th:text=" 'Tasa de repetición  ' + ${trono.tasaRepeticion}"> Tasa de repetición </p>
+                                                        
+                                                        
 						</div>
 						<div class="bloqueDatos">
-							<p> Talla media </p>
-							<p> Porcentaje de hermanos </p>
-							<p> Puestos por asignar </p>
+							<p th:text=" 'Talla media:  1.'+${trono.tallaMedia}"> Talla media </p>
+							<p th:text=" 'Puestos por asignar: '+${trono.PuestosPorAsignar}"> Puestos por asignar </p>
+                                                        <p th:text=" 'Peso por portador: '+${trono.pesoPorCabeza}+'KG'"> Peso por portador </p>
 						</div>
                                         </tr>
                                         </table>

@@ -49,6 +49,13 @@ public class Trono implements Serializable {
     @Column(name = "puestofinalmesa", nullable = false)
     private int puestoFinalMesa;//INTRODUCIR OPCION SUBMARINO??????????
     
+    private int puestosTotales;
+    private int puestosCubiertos;
+    private double tasaRepeticion;
+    private int puestosPorAsignar;
+    private double porcentajeHermanos;
+    private double pesoPorCabeza;
+    private double tallaMedia;
     
     @OneToOne
     @JoinColumn(name = "idseccion", referencedColumnName="id")

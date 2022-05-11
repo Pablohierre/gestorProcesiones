@@ -8,6 +8,7 @@ import java.util.List;
 import models.Seccion;
 import models.Trono;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
@@ -16,5 +17,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TronoRepository extends JpaRepository<Trono, Long> {
     
     Trono getByIdSeccion(Seccion seccion);
+    
+    @Query("Select t.peso from Trono t where t.id=?1")
+    int findPesoById(Long idTrono);
     
 }

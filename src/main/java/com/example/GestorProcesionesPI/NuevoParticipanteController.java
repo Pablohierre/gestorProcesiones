@@ -69,6 +69,7 @@ public class NuevoParticipanteController implements Serializable {
     public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @ModelAttribute Procesion pro){
         System.out.println("Entra en el metodo anadirNuevoParticipante");
         System.out.println("El valor de la variable global es "+ nuevaProcesion.toString());
+        System.out.println("participante: "+p.toString());
         
         if(repparticipante.findFirstByDni(p.getDni())==null){ //Si el participante no existe ya en la BD, lo persisto 
             System.out.println("Participante nuevo");
@@ -147,9 +148,7 @@ public class NuevoParticipanteController implements Serializable {
             par.setCingulo("0");
             par.setCapirote("0");
             
-            
-            
-//            System.out.println("Participación: "+par.toString());            
+                      
             repparticipacion.save(par); //persisto la participación
         
     return "redirect:/procesionesActivas/"+participante.getId();
@@ -161,7 +160,7 @@ public class NuevoParticipanteController implements Serializable {
         
                 
         System.out.println("DNI: "+ p.getDni());
-        nuevoParticipante =repparticipante.findFirstByDni(p.getDni());
+        nuevoParticipante=repparticipante.findFirstByDni(p.getDni());
         System.out.println("Participante encontrado: "+nuevoParticipante.toString());
         
         model.addAttribute("participante", nuevoParticipante);
