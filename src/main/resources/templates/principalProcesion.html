@@ -102,7 +102,7 @@
 
  			.bloqueDatos{
  				display: inline-block;
- 				margin-right: 17%;
+ 				margin-right: 15%;
  			}
 
  			/*.bloqueDatos .primero{
@@ -236,9 +236,9 @@
 				<div class="bloqueEstadisticas">
 					<h5> Procesión </h5>
 						<div class="bloqueDatos primero">
-							<p> Nº total de participantes </p> 
-							<p> Nº de secciones </p> 
-							<p> Nº de tronos </p> 
+							<p th:text=" 'Nº total de participantes  ' + ${#lists.size(procesion.participaciones)}"> Nº total de participantes </p> 
+							<p th:text=" 'Nº total de secciones  ' + ${#lists.size(procesion.secciones)}"> Nº de secciones </p> 
+							
 						</div>
 				</div>
 				<div  class="bloqueEstadisticas">
@@ -246,7 +246,7 @@
                                     <table>
                                         <tr th:each="seccion:${secciones}">
                                             
-                                            <p> <strong>Cristo</strong><p>
+                                           <strong><p th:text="${seccion.nombre}">Trono <p></strong>
                                                     <div class="bloqueDatos">
                                                             <p> Puestos disponibles </p>
                                                             <p> Nº participantes: </p>
