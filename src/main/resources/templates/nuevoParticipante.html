@@ -19,7 +19,7 @@
 		  </div>    
     	
     	<div class="formulario">
-    		<form action="#" th:action="@{/nuevoParticipante/{id}(id=${procesion.id})}" method="post" id="formParticipante">
+    		<form action="#" th:action="@{/nuevoParticipante/{id}/{idpart}(id=${procesion.id}, idpart=${participacion.id})}" method="post" id="formParticipante">
                     <input type="hidden" th:field="*{participante.id}">
                     <input type="text" th:field="*{participante.nombre}" placeholder="Nombre" /> <!-- th:value="${}" -->
                     <input type="text" th:field="*{participante.apellidos}" placeholder="Apellidos"/>
@@ -49,6 +49,7 @@
         			<input type="text" th:field="*{participacion.tunica}" placeholder="Túnica"/>
         			<input type="text" th:field="*{participacion.cingulo}" placeholder="Cíngulo"/>
         			<input type="text" th:field="*{participacion.capirote}" placeholder="Capirote"/>
+                                <input type="text" th:field="*{participacion.codPuesto}" placeholder="Puesto"/>
 
                     <input type="submit" value="submit">
     		        

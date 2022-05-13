@@ -65,30 +65,29 @@ public class NuevoParticipanteController implements Serializable {
     }
         
     
-    @PostMapping("nuevoParticipante/{idProcesion}")
-    public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @PathVariable Long idProcesion){
+    @PostMapping("nuevoParticipante/{idProcesion}/{idParticipacion}")
+    public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @PathVariable Long idProcesion, @PathVariable Long idParticipacion){
+        System.out.println("el id de la participacion es: "+par.getId());
         System.out.println("Entra en el metodo anadirNuevoParticipante");
         System.out.println("participante: "+p.toString());
         Procesion pro = reppro.getById(idProcesion);
-        
-        
-        
-        if(repparticipante.findFirstByDni(p.getDni())==null){ //Si el participante no existe ya en la BD, lo persisto 
-            System.out.println("Participante nuevo");
-            repparticipante.save(p);             
-               System.out.println("Participante guardado: "+p);             
-        }else if (repparticipante.findFirstByDni(p.getDni())!=null){          
+        Participante comparador = repparticipante.findFirstByDni(p.getDni());
+         
+        // SI EL PARTICIPANTE QUE LLEGA YA EXISTE, BUSCO SUS PARTICIPACIONES Y SE LAS ASIGNO AL NUEVO PARTICIPANTE que va a sobreescribir el antiguo registro       
+         if (comparador!=null){   
             System.out.println("Participante antiguo");
+            p.setParticipaciones(comparador.getParticipaciones());       
         };   
-        
-        nuevoParticipante = repparticipante.findFirstByDni(p.getDni());; //le asigno a la variable global el objeto participante que ha entrado en el metodo, para que luego se la pueda pasar al metodo que guarda las participaciones       
-        
+        repparticipante.save(p);
+         System.out.println("Participante guardado: "+p); 
+        par.setId(idParticipacion);//le vuelvo a asignar su propio ID porque a la hora de editar, estaba cogiendo el ID del participante
+        System.out.println("participacion :"+par);
         String nombreSeccion = par.getNombreSeccion(); //Recojo el nombre de seccion indicado en el formulario
-        Seccion seccion = secrep.findByIdProcesionAndName(nuevaProcesion, nombreSeccion);
+        Seccion seccion = secrep.findByIdProcesionAndName(pro, nombreSeccion);
         System.out.println("Seccion encontrada: "+seccion);
         System.out.println("la procesion que llega es: "+pro);
         par.setIdSeccion(seccion);
-        par.setIdParticipante(nuevoParticipante); // Le asigno a la participacion el id del participante que acabo de persistir y que me viene de la variable global seteada por el metodo anadirNuevoParticipante
+        par.setIdParticipante(p); // Le asigno a la participacion el id del participante que acabo de persistir y que me viene de la variable global seteada por el metodo anadirNuevoParticipante
         par.setIdProcesion(pro); // Le asigno a la participacion el id de la procesion, que me viene de la variable global seteada por el metodo anadirNuevoParticipante
         par.setModoSolicitud("presencial");
         par.setEstado("aprobado");
@@ -98,7 +97,7 @@ public class NuevoParticipanteController implements Serializable {
         repparticipacion.save(par); //persisto la participación
         System.out.println("Persistido con éxito");
         
-    return "redirect:/procesion/"+nuevaProcesion.getId();
+    return "redirect:/procesion/"+pro.getId();
     }
     
     
@@ -174,11 +173,13 @@ public class NuevoParticipanteController implements Serializable {
     }
     
     @GetMapping("editarParticipacion/{idParticipacion}")
-    public String editarParticipante(Model model, @PathVariable Long idParticipacion){
+    public String editarParticipacion(Model model, @PathVariable Long idParticipacion){
+        System.out.println("Entra en editarParticipacion");
         Participacion participacion = repparticipacion.getById(idParticipacion);
         Participante participante = participacion.getIdParticipante();
         Procesion procesion = participacion.getIdProcesion();
         System.out.println("procesion: "+procesion);
+        System.out.println("participacion :"+participacion.toString());
         
         
         model.addAttribute("participante", participante); 

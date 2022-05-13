@@ -57,14 +57,8 @@
 
 	<div class="listaTronos">
 		<div class="contenido">
-			<div class="trono">
-				<p>Cristo SGDO Descendimiento</p>
-			</div>
-			<div class="trono">
-				<p>María Stsma de las Angustias</p>
-			</div>
-			<div class="trono">
-				<p>Nombre Trono lololó</p>
+			<div class="trono" th:each="trono:${tronos}">
+				<p th:text="${trono.nombre}">Cristo SGDO Descendimiento</p>
 			</div>
 		</div>
 
