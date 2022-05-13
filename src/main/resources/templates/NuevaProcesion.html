@@ -7,9 +7,11 @@
 
 	<body>
 		<div class="bloqueCentral">
-			<h1> Crear una Nueva Procesion </h1>
+			<h1 th:text="${titulo}"> Crear una Nueva Procesion </h1>
                          <form action="#" th:action="@{/nueva}" th:object="${procesion}" method="post">
 				<div class="seccionFormulario">
+                               <input type="hidden" id="edit" th:value="${edit}"/>
+                               <input type="hidden" th:field="*{id}"/>
 			      <label for="nombre">Nombre:</label><br>
 			      <input type="text" th:field="*{nombre}"/><br>
 			     </div>
@@ -48,6 +50,11 @@
             
             
             
-            document.getElementById("numSecciones").defaultValue = "1";
+            if (document.getElementById('edit').equals(true)) {
+            document.getElementById('numSecciones').readOnly = true;                
+            
+            }
+            
+            //document.getElementById("numSecciones").defaultValue = "1";
         </script>
 </html>

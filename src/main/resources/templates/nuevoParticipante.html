@@ -20,6 +20,7 @@
     	
     	<div class="formulario">
     		<form action="#" th:action="@{/nuevoParticipante/{id}(id=${procesion.id})}" method="post" id="formParticipante">
+                    <input type="hidden" th:field="*{participante.id}">
                     <input type="text" th:field="*{participante.nombre}" placeholder="Nombre" /> <!-- th:value="${}" -->
                     <input type="text" th:field="*{participante.apellidos}" placeholder="Apellidos"/>
                     <input type="text" th:field="*{participante.numHermano}" placeholder="Nº hermano"/>
@@ -31,7 +32,8 @@
                     <label for="fechanac" value="Fecha de alta de hermano"/>
                     <input type="date" th:field="*{participante.fechaHermano}" name="fechaAlta"/>
                     <!--<input type="submit" value="registrar participante">                           -->
-                    <input  list="secciones"  name="secciones"  th:field="*{participacion.nombreSeccion}" placeholder="Seccion" /> <!-- type="${seccion}" -->
+                    <input type="hidden" th:field="*{participacion.id}">
+                    <input  list="secciones"  name="secciones"  th:field="*{participacion.nombreSeccion}" placeholder="Seccion" />
                         <datalist id="secciones" >                         
                              <option th:each="seccion:${procesion.secciones}" th:value="${seccion.nombre}"/>                                                
                         </datalist>       
@@ -59,11 +61,7 @@
         <script>
           //var botonsubmit = document.getElementById("submitformularios").addEventListener( 'click', function () {
              
-            submitForms = function(){
-              console.log("Clic registrado");
-              document.getElementById("formParticipante").submit(); //ANTES DE CREAR HAY QUE COMPROBAR QUE NO EXISTA YA. SI EXISTE PERO TIENE DATOS ACTUALIZADOS HABRÍA QUE SOBREESCRIBIR
-              document.getElementById("formParticipacion").submit();    
-          }
+            
                        
             
         var input = document.getElementById("barrabuscador");

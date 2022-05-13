@@ -29,19 +29,52 @@ public class NuevaProcesionController {
     private ProcesionRepository repPro;
     
     @GetMapping("/nueva")
-    public String nuevaProcesion(@ModelAttribute Procesion procesion, Model model){                  
+    public String nuevaProcesion(@ModelAttribute Procesion procesion, Model model){
+         model.addAttribute("edit", false);
+         model.addAttribute("titulo","Crear una Nueva Procesion");
         return "NuevaProcesion.html";
     }
     
     @PostMapping("/nueva")
-    public String crearNueva(@ModelAttribute Procesion procesion, Model model){
+    public String crearNueva(@ModelAttribute Procesion procesion,  Model model){
+        String retornar ="";
         System.out.println("Recogiendo datos del formulario");
-        repPro.save(procesion); // IMPLEMENTAR MODAL DE "GUARDADO CON EXITO"
+        System.out.println(procesion.toString());
+        System.out.println("secciones: "+procesion.getSecciones());
+        System.out.println("participaciones: "+procesion.getParticipaciones());
         
-        //Procesion ultimaCreada = repPro.findLastRecordInserted(procesion);
-        //long idProcesion = ultimaCreada.getId();// OBTENGO EL ID DE LA PROCESION QUE HE CREADO PARA PODER CREAR LAS SECCIONES ASOCIADAS
+        Procesion comparador = repPro.getById(procesion.getId());
         
+        /* CUANDO SE EDITA LA PROCESIÓN, SOLO LLEGAN AL CONTROLADOR LOS DATOS DEL ID, LA FECHA, EL TITULO Y EL NUMSECCIONES. 
+        LA LISTA DE SECCIONES Y PARTICIPACIONES NO LLEGA Y POR ESO HAY QUE VOLVÉRSELA ASIGNAR, YA QUE SI NO, LAS SECCIONES 
+        Y LAS PARTICIPACIONES QUE DEPENDEN DE LA PROCESIÓN SE QUEDARIAN SIN SU CALVE FORÁNEA*/
         
-        return "redirect:/crearSecciones/"; 
+        if(comparador!=null){ 
+            System.out.println("Procesión ya existente");
+            System.out.println("Asignando listas");
+            procesion.setParticipaciones(comparador.getParticipaciones());
+            procesion.setSecciones(comparador.getSecciones());
+            System.out.println("secciones: "+procesion.getSecciones());
+            System.out.println("participaciones: "+procesion.getParticipaciones());
+            retornar="redirect:/admin/";
+            }else{
+            retornar="redirect:/crearSecciones/";
+        }     
+        
+        repPro.save(procesion); // IMPLEMENTAR MODAL DE "GUARDADO CON EXITO"        
+        return retornar;   
     }
+    
+    @PostMapping("/editarProcesion/{idProcesion}")
+    public String editarProcesion (Model model, @PathVariable Long idProcesion){
+        Procesion procesion = repPro.getById(idProcesion);
+        
+        model.addAttribute("procesion", procesion);
+        model.addAttribute("edit", true);
+        model.addAttribute("titulo","Editando la procesión "+procesion.getNombre());
+        
+        return "NuevaProcesion.html";
+    }
+    
+
 }

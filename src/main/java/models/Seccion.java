@@ -6,6 +6,7 @@ package models;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,7 +47,7 @@ public class Seccion implements Serializable {
     @Column(name = "tronosino", nullable = false)
     private boolean tronoSiNo;
     
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "idSeccion")//nombre del campo de la clase Tramo que mapea este objeto
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "idSeccion", orphanRemoval=true)//nombre del campo de la clase Tramo que mapea este objeto
     private List<Tramo> tramos;
     
     //@OneToOne

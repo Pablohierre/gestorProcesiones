@@ -65,11 +65,13 @@ public class NuevoParticipanteController implements Serializable {
     }
         
     
-    @PostMapping("nuevoParticipante/{id}")
-    public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @ModelAttribute Procesion pro){
+    @PostMapping("nuevoParticipante/{idProcesion}")
+    public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @PathVariable Long idProcesion){
         System.out.println("Entra en el metodo anadirNuevoParticipante");
-//        System.out.println("El valor de la variable global es "+ nuevaProcesion.toString());
         System.out.println("participante: "+p.toString());
+        Procesion pro = reppro.getById(idProcesion);
+        
+        
         
         if(repparticipante.findFirstByDni(p.getDni())==null){ //Si el participante no existe ya en la BD, lo persisto 
             System.out.println("Participante nuevo");

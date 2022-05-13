@@ -10,6 +10,7 @@ import models.Participacion;
 import models.Procesion;
 import models.Seccion;
 import models.Tramo;
+import models.Trono;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,9 @@ public class PrincipalController {
     @Autowired
     ParticipacionRepository repparticipacion;
     
+    @Autowired
+    TronoRepository reptrono;
+    
     @GetMapping("/admin")
     public String principal( Model model){ 
         long millis=System.currentTimeMillis();  
@@ -65,27 +69,31 @@ public class PrincipalController {
     
     @PostMapping("/eliminarProcesion/{idProcesion}")
     public String eliminarProcesion(Model model, @PathVariable Long idProcesion){
+        System.out.println("entra en eliminarProcesion");
         Procesion procesion = reppro.getById(idProcesion);
         List <Seccion> secciones = procesion.getSecciones();
+        List <Participacion> participaciones = repparticipacion.findByIdProcesion(procesion);
         
-        for(Seccion s:secciones){
-            List <Tramo> tramos = s.getTramos();//COJO TODOS LOS TRAMOS DE ESA SECCION
-                for(Tramo t:tramos){
-                    reptramo.delete(t);// BORRO LOS TRAMOS UNO A UNO
-                    System.out.println("borrando tramo");
-                }
-            repsec.delete(s);//BORRO LA SECCION
-            System.out.println("borrando seccion");
+        for(Participacion p:participaciones){
+            System.out.println("Borrando participacion id "+p.getId());
+            repparticipacion.delete(p);
         }
-        
-               
-//        List <Participacion> participaciones = repparticipacion.findByIdProcesion(procesion);
-//        for(Participacion p:participaciones){
-//            repparticipacion.delete(p);
-//        }
-        
+      
+        for(Seccion s:secciones){
+            System.out.println("recorriendo secciones");
+            Trono trono = reptrono.getByIdSeccion(s);
+            if(trono!=null){
+                System.out.println("borrando "+trono.getNombre());
+                reptrono.delete(trono);
+                System.out.println("borrado con éxito");
+            }
+        }       
         reppro.delete(procesion);
+        System.out.println("elimina la procesion");
         
         return "redirect:/admin";
     }
+    
+    
+    
 }

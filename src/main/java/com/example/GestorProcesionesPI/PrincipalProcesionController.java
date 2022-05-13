@@ -107,20 +107,29 @@ public class PrincipalProcesionController implements Serializable {
         int repetidores = reppart.findByTipoAndSeccionWithMultipleParticipacion(seccion, "portador").size();
         System.out.println("repetidores: "+repetidores);
         
-        double tasaRepeticion = repetidores/puestosCubiertos*100;
+        double tasaRepeticion=0.0;
+        double talla =0.0;
+        int puestosSinAsignar=0;
+        double peso =0.0;
+        double pesoPorPortador =0.0;
+        
+        
+        if(puestosCubiertos!=0){
+         tasaRepeticion= repetidores/puestosCubiertos*100;
         System.out.println("tasa repeticion: "+tasaRepeticion);
         
-        double talla = reppart.findAVGTallaByTipoAndSeccion(seccion, "portador");
+        
+        talla = reppart.findAVGTallaByTipoAndSeccion(seccion, "portador");
         System.out.println("talla media: "+talla);
         
-        int puestosSinAsignar = reppart.findUnassignedPuestoByTipoAndSeccion(seccion, "portador");
+        puestosSinAsignar = reppart.findUnassignedPuestoByTipoAndSeccion(seccion, "portador");
         
         
-        double peso = reptrono.findPesoById(trono.getId());
+        peso = reptrono.findPesoById(trono.getId());
         System.out.println("Peso total: "+peso);
-        double pesoPorPortador = peso/puestosCubiertos;
+         pesoPorPortador= peso/puestosCubiertos;
         System.out.println("p. por portador: "+pesoPorPortador);
-        
+        }
         
        // int numRepetidores = repparticipante.findByMultipleParticipacion().size();
         trono.setPuestosTotales(puestosTotales);

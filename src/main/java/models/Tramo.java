@@ -5,6 +5,7 @@
 package models;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class Tramo implements Serializable {
 //    @JoinColumn(name = "id_procesion") //Nombre de la columna de la tabla tramos
 //    private Procesion idProcesion; //FK
     
-    @ManyToOne //muchos tramos pertenecen a la misma sección
+    @ManyToOne(cascade=CascadeType.REMOVE) //muchos tramos pertenecen a la misma sección
     @JoinColumn(name = "idseccion") //Nombre de la columna de la tabla tramos
     private Seccion idSeccion; // FK
     

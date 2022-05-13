@@ -5,6 +5,7 @@
 package models;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,7 +58,7 @@ public class Trono implements Serializable {
     private double pesoPorCabeza;
     private double tallaMedia;
     
-    @OneToOne
-    @JoinColumn(name = "idseccion", referencedColumnName="id")
+    @OneToOne(orphanRemoval=true)
+    @JoinColumn(name = "idseccion", referencedColumnName="id",nullable=true)
     private Seccion idSeccion; //FK - id de la seccion en la que procesiona el trono
 }

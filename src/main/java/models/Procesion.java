@@ -7,6 +7,7 @@ package models;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,10 +46,10 @@ public class Procesion implements Serializable {
 //    @JoinColumn(name = "idprocesion")
 //    private List <Seccion> secciones;
     
-    @OneToMany(mappedBy="idProcesion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="idProcesion", fetch = FetchType.LAZY, orphanRemoval=true)//
     private List <Seccion> secciones;
     
-    @OneToMany(mappedBy="idProcesion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="idProcesion", fetch = FetchType.LAZY)//Trono trono = reptrono.getByIdSeccion(s);
     private List <Participacion> participaciones;
     
 

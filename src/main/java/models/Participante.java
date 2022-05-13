@@ -7,6 +7,7 @@ package models;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,7 +56,7 @@ public class Participante implements Serializable{
    private Date fechaHermano;
        
    
-   @OneToMany(mappedBy="idParticipante")
+   @OneToMany(mappedBy="idParticipante", cascade=CascadeType.REMOVE)
    private List <Participacion> participaciones;
 
     public Participante() {

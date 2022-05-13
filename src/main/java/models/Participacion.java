@@ -6,6 +6,7 @@ package models;
 
 import java.io.Serializable;
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,16 +41,16 @@ public class Participacion implements Serializable {
     @Column(name = "fecha", nullable = true)
     private Date fecha;
     
-    @ManyToOne
+    @ManyToOne//(cascade=CascadeType.REMOVE)
     @JoinColumn(name = "idprocesion", nullable = false) //Nombre de la columna de la tabla procesión
     private Procesion idProcesion; //FK
     
-    @ManyToOne //MUCHCAS PARTICIPACIONES PUEDEN SER DEL MISMO PARTICIPANTE
+    @ManyToOne//(cascade=CascadeType.REMOVE) //MUCHCAS PARTICIPACIONES PUEDEN SER DEL MISMO PARTICIPANTE
     @JoinColumn(name = "idparticipante", nullable = false) //Nombre de la columna de la tabla participacion que lleva la FK
     private Participante idParticipante; //FK
       
-    @OneToOne //UNA PARTICIPACION SOLO PUEDE TENER UNA SECCION
-    @JoinColumn(name = "idseccion", referencedColumnName = "id") //Nombre de la columna de la tabla secciones
+    @OneToOne//(orphanRemoval=true) //UNA PARTICIPACION SOLO PUEDE TENER UNA SECCION
+    @JoinColumn(name = "idseccion",  nullable=true) //Nombre de la columna de la tabla secciones referencedColumnName = "id",
     private Seccion idSeccion; //FK 
     
     @Column(name = "nombreseccion", nullable = true)

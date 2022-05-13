@@ -35,7 +35,7 @@ public class Usuario implements Serializable {
     private String pwd;
     private String tipo; //ADMIN vs USER
     
-    @OneToOne(cascade= CascadeType.ALL)
+    @OneToOne(orphanRemoval=true)
     @JoinColumn(name="idparticipante", referencedColumnName="id")
     private Participante idparticipante;
     
