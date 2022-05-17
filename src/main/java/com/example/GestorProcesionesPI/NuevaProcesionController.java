@@ -43,13 +43,14 @@ public class NuevaProcesionController {
         System.out.println("secciones: "+procesion.getSecciones());
         System.out.println("participaciones: "+procesion.getParticipaciones());
         
-        Procesion comparador = repPro.getById(procesion.getId());
+        
         
         /* CUANDO SE EDITA LA PROCESIÓN, SOLO LLEGAN AL CONTROLADOR LOS DATOS DEL ID, LA FECHA, EL TITULO Y EL NUMSECCIONES. 
         LA LISTA DE SECCIONES Y PARTICIPACIONES NO LLEGA Y POR ESO HAY QUE VOLVÉRSELA ASIGNAR, YA QUE SI NO, LAS SECCIONES 
         Y LAS PARTICIPACIONES QUE DEPENDEN DE LA PROCESIÓN SE QUEDARIAN SIN SU CALVE FORÁNEA*/
         
-        if(comparador!=null){ 
+        if(procesion.getId()!=null){ 
+            Procesion comparador = repPro.getById(procesion.getId());
             System.out.println("Procesión ya existente");
             System.out.println("Asignando listas");
             procesion.setParticipaciones(comparador.getParticipaciones());

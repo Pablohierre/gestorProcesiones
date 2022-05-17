@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Gestión de prácticas - Login</title>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            .inline{
+                display:inline-flex
+            }
+          .cuadrante{
+            max-width: 75%;
+          }
+
+          .varales{
+            max-width: 80%;
+            height: fit-content;
+            border-style: solid;
+            border-color: green;
+          }
+
+          .varal{
+            border-style: solid;
+            border-color: red;
+            width: fit-content;
+            display: inline-flex;
+            height: fit-content;
+
+          }
+
+          .puesto{
+            height: 100px;
+            width: 150px;
+            border-style: solid;
+            border-width: 3px;
+            border-color: black;
+            margin: 5px;
+            
+          }
+          .lista{
+              padding:15px;
+              width: 25%;
+          }
+          .participantes{
+              height: fit-content;
+              max-height: 70%;
+              width:100%;
+              border-style:solid;
+              border-color:black;
+              border-width: 2px;
+              overflow: scroll;
+              
+          }
+          .portador{
+              width: 90%;
+              border-style:solid;
+              border-color:black;
+              border-width: 1px;
+              margin:auto;
+          }
+          .asignar{
+    		background-color:#750386;
+    		color: white;
+                border-radius: 3px;
+                margin:auto;
+                display: block;
+                width: 75%;
+                margin-top: 25px;
+    	}
+        </style>
+    </head>
+
+    <body>
+        <div class="titulo">
+            <h1 th:text=" 'Cuadrante de trono '+${trono.nombre}">Cuadrante del </h1>
+        </div>
+        <div class="inline">
+            <div>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td th:each="letra, stats:${letrasVarales}" th:text="${letra}" class="cuadrante"></td>
+
+                    </tr>
+                    <tr th:each="puesto:${puestosVexternos}">
+                        <td th:text="${puesto}">
+                        <td th:each="letra:${letrasVarales}" th:text="${letra}+${puesto}"class="puesto connected-sortable droppable-area2" id="puesto"></td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="lista">
+                <button class="asignar"> Asignar puestos </button>
+                <Strong><p>Portadores Inscritos</p></Strong>
+                <div class="participantes connected-sortable droppable-area1" id="sortable">
+
+                    <div class="portador" th:each="participacion:${participaciones}">
+                        <div class="nombre" style="width:100%;">
+                            <p th:text="${participacion.idParticipante.nombre}"> Pablo Hierrezuelo </p>
+                        </div> 
+                        <div class="otrainfo" style="width:100%;display:inline-flex;">
+                            <div class="talla" style="width:50%;float:left;"> <p th:text="'Talla :1'+${participacion.talla}"> Talla: 1.60 </p></div>
+                            <div class="antiguedad" style="width:50%;float:right;"><p th:text="'Salidas: '+${#lists.size(participacion.idParticipante.participaciones)}"> Salidas: 5 </p></div>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+        </div>
+
+
+<script th:inline="javascript">
+    
+    
+    /*<![CDATA[*/
+    const participaciones=/*[[${participaciones}]]*/10;
+     
+    var inicioMesa=/*[[${inicioMesa}]]*/10;
+    var finalMesa=/*[[${finalMesa}]]*/20;
+    var varales=/*[[${letrasVarales}]]*/A;
+    var puesto = /*[[${puesto}]]*/A;
+    var letra = /*[[${letras}]]*/A;
+    console.log("HOLA")
+    if (puesto>inicioMesa && puesto<finalMesa) {
+        console.log("Entra en el if")
+     document.getElementById("puesto").style.backgroundColor = "red";
+    }
+    
+    
+    
+    $( init );
+
+function init() {
+  $( ".droppable-area1, .droppable-area2" ).sortable({
+      connectWith: ".connected-sortable",
+      stack: '.connected-sortable ul'
+    }).disableSelection();
+}
+
+
+
+
+</script>
+    </body>
+</html>

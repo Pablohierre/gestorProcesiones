@@ -57,9 +57,14 @@
 
 	<div class="listaTronos">
 		<div class="contenido">
+                   
 			<div class="trono" th:each="trono:${tronos}">
+                             <a th:href="@{/editarCuadrante/{id}(id=${trono.id})}">
 				<p th:text="${trono.nombre}">Cristo SGDO Descendimiento</p>
+                                <p th:text="${trono.id}">Cristo SGDO Descendimiento</p>
+                                </a>
 			</div>
+                    
 		</div>
 
 			</div>

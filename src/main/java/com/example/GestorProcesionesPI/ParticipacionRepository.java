@@ -40,6 +40,8 @@ public interface ParticipacionRepository extends JpaRepository<Participacion, Lo
     
     @Query("select count(*) from Participacion p where p.idSeccion=?1 and p.tipo=?2 and p.codPuesto=null ")
     int findUnassignedPuestoByTipoAndSeccion(Seccion seccion, String tipo);
+    
+
    
 //    @Query("select p from Participacion p where p.idSeccion=?1 and p.tipo=?2 and COUNT(idParticipante) > 1")
 //    List <Participacion> findByTipoAndSeccionWithMultipleParticipacion(Seccion seccion, String tipo);

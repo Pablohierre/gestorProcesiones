@@ -43,7 +43,7 @@ public class SeleccionarCuadranteController implements Serializable {
            tronos.add(reptrono.getByIdSeccion(s)); 
             }
         }
-        
+        System.out.println(tronos.toString());
         model.addAttribute("tronos", tronos);
         
         return "seleccionarCuadrante.html";
