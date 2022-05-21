@@ -3,11 +3,100 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
  		<link rel="stylesheet" href="../styles/estilos.css">
+
+ 		<style>
+ 			    	
+
+
+			body{
+				margin: 0px;
+				background: #F8F6FD;
+				max-width: 100%;
+    			overflow-x: hidden;
+			}
+
+			.footer{
+				width: inherit;
+				height: fit-content;
+				background-color: #750386;
+				margin-top: 25px;
+				color: white;
+				display: block;
+				text-align: center;
+				padding-top: 7px;
+				padding-bottom: 7px;
+
+			}
+
+			.footer a{
+				color: white;
+				display: block;
+				margin: auto;
+				text-align: center;
+			}
+
+			#espera{
+    		background-color: #ba5c04;
+    		color: white;
+    	}
+
+    	button{
+    		
+    		 background-color:#ca9f0c;
+                 padding: 8px;
+                 border-radius: 4px;
+                 width: 35%;
+                 color: fff;
+                 font-weight: 600;
+                 border: none;
+                 display: block;
+                 margin: auto;
+                 margin-top: 30px;
+    		
+    	}
+
+    	.titulo{
+    		display: block;
+    		margin: auto;
+    	}
+    	#titulo{
+                float: right;
+                width: fit-content;
+                color: #fff;
+                margin-right: 6%;
+                display: inline-flex;
+            }
+
+            #titulo h1{
+               /* margin-left: 2%;*/
+                margin-top: 10%;
+            }
+            .topbar{
+				width: 100%;
+				height: fit-content;
+				background-color: #750386;
+				padding: 5px 0px 5px 15px;
+
+			}
+
+ 		</style>
 	</head>
 
 	<body>
+		<div class="topbar">
+           
+            <img src="../img/laVenialogopequeño.png"  width="191 px">     
+            <div id="titulo">
+                <h1>Gestión de Procesiones</h1>   
+            </div> 
+        </div>
+
+		<div class="titulo">
+			<h1> Crear una Nueva Procesión </h1>
+			</div>
+
 		<div class="bloqueCentral">
-			<h1 th:text="${titulo}"> Crear una Nueva Procesion </h1>
+			
                          <form action="#" th:action="@{/nueva}" th:object="${procesion}" method="post">
 				<div class="seccionFormulario">
                                <input type="hidden" id="edit" th:value="${edit}"/>
@@ -25,10 +114,18 @@
 			    </div>
 
 		      <div class="submitFormulario">
-          <input type="submit" value="Submit">
+           <button type="submit" class="btn">Añadir</button>
         </div>
     		</form>
 		</div>
+
+		<div class="footer">
+    	<p> Feito com amor pela equipe da Falo Portugues SL </p>
+    	<p> © Paulo & Robertinho Produçoes </p>
+    	<a href="https://www.tiktok.com/@darioemehache/video/6766665658685033733?is_from_webapp=1&sender_device=pc&web_id=7006034867881051653"> Términos y cóndiciones </a>
+    </div>
+
+
 	</body>
         
         <script>

@@ -48,7 +48,12 @@ public class editarCuadranteController implements Serializable {
             puestosVexternos.add(i+1);
         }
         
-        List <Participacion> portadores = repparticipacion.findByTipoAndSeccion(trono.getIdSeccion(), "portador");      
+        List <Participacion> portadores = repparticipacion.findByTipoAndSeccion(trono.getIdSeccion(), "portador");
+        
+        List <Long> idPart = new ArrayList<>();
+        for(Participacion p:portadores){
+            idPart.add(p.getId());
+        }
         
         
         System.out.println(letrasVarales);
@@ -59,7 +64,8 @@ public class editarCuadranteController implements Serializable {
         model.addAttribute("puestosVexternos",puestosVexternos);
         model.addAttribute("letrasVarales", letrasVarales);
         model.addAttribute("participaciones", portadores);
-        model.addAttribute("trono", trono);       
+        model.addAttribute("trono", trono); 
+        model.addAttribute("idPart", idPart);
         
         
         return "editarCuadrante.html";

@@ -21,25 +21,78 @@
     		padding: 10px;
     	}
 
-    	.titulo h1{
+    	.micontainer h2{
     		margin-top: 30px;
     		font-size: 45px;
-                margin-left: 30px;
+            margin-left: 30px;
     	}
 
-    	.participaciones h2{
+    	.participaciones h3{
     		margin-left: 50px;
     	}
+        #rechazar{
+    		background-color: #c42406;
+    		color: white;
+                border-radius: 3px;
+    	}
+
+    				.footer{
+                width: inherit;
+                height: fit-content;
+                background-color: #750386;
+                margin-top: 25px;
+                color: white;
+                display: block;
+                text-align: center;
+                padding-top: 7px;
+                padding-bottom: 7px;
+
+            }
+
+            .footer a{
+                color: white;
+                display: block;
+                margin: auto;
+                text-align: center;
+            }
+
+            			        .topbar{
+                width: 100%;
+                height: fit-content;
+                background-color: #750386;
+                padding: 5px 0px 5px 15px;
+            }
+            h1{
+               /* margin-left: 2%;*/
+                margin-top: 10%;
+            }
+
+            #titulo{
+                float: right;
+                width: fit-content;
+                color: #fff;
+                margin-right: 6%;
+                display: inline-flex;
+
+            }
     </style>
 </head>
 
 <body>
-	<div class="titulo">
-		<h1 > 
+<div class="topbar">
+           
+            <img src="../img/laVenialogopequeño.png"  width="191 px">     
+            <div id="titulo">
+                <h1>Gestión de Procesiones</h1>
+                
+            </div>
+        </div>
+      <div class="micontainer">
+		<h2 > 
                     <span th:if="${participante.numHermano} == '0'">Externo</span>
                     <span th:unless=" ${participante.numHermano} == '0'" th:text="'Hermano Nº '+${participante.numHermano}">Hermano Nº </span>
                             
-                </h1>
+                </h2>
 	</div>
 	<div class="datos">
 		<div class=imagen>
@@ -105,7 +158,7 @@
 
 	</div>
 	<div class="participaciones">
-		<h2> Participaciones </h2>
+		<h3> Participaciones </h3>
 
 	<table class="table table-hover">
 		<thead>
@@ -126,13 +179,21 @@
                                 <td th:text="${participacion.idSeccion.nombre}">10</td>
                                 <td th:text="${participacion.tipo}">Portador</td>
                                 <td th:text="${participacion.codPuesto}">CA05</td>
-                                <td> <button> Eliminar </button> </td>
+                                <td> 
+                                <form th:action="@{/eliminarParticipacion/{id} (id=${participacion.id})}" th:object="${participacion}" method="post">
+                                                <button type="submit" class="btn" id="rechazar">Eliminar</button>
+                                </form>
+                                </td>
 
                             </tr>
                         </tbody>
         </table>
         </div>
-
+<div class="footer">
+    	<p> Feito com amor pela equipe da Falo Portugues SL </p>
+    	<p> © Paulo & Robertinho Produçoes </p>
+    	<a href="https://www.tiktok.com/@darioemehache/video/6766665658685033733?is_from_webapp=1&sender_device=pc&web_id=7006034867881051653"> Términos y cóndiciones </a>
+    </div>
 </body>
 <script>
     function rowClicked(value) {

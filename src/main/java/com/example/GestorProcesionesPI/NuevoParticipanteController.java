@@ -44,7 +44,7 @@ public class NuevoParticipanteController implements Serializable {
    
     
     @GetMapping("nuevoParticipante/{id}")
-    public String nuevoParticipante(Model model, @ModelAttribute Procesion p){
+    public String nuevoParticipante(Model model, @ModelAttribute Procesion p, Participacion participacion){
         
         System.out.println("nuevo participante. Procesion "+p.toString());
         
@@ -54,7 +54,7 @@ public class NuevoParticipanteController implements Serializable {
         nuevaProcesion = p;
         System.out.println(p.toString());
 
-        Participacion participacion = new Participacion();
+//        Participacion participacion = new Participacion();
         Participante participante = new Participante();
         System.out.println("las secciones de la procesion son: " + p.getSecciones());
         model.addAttribute("participante", participante); //LE PASO UN PARTICIPANTE VACÍO A LA PLANTILLA PARA QUE LO PUEDA RELLENAR EN EL FORMULARIO
@@ -64,26 +64,41 @@ public class NuevoParticipanteController implements Serializable {
         return "nuevoParticipante.html";
     }
         
-    
+//    @PostMapping("nuevoParticipante/{id}")
+//    public String anadirParticipacionNuevoParticipante(Model model, Participante p, Participacion par, @PathVariable Long idProcesion, @PathVariable Long idParticipacion){
+//        System.out.println("---NUEVO PARTICIPANTE---");
+//        
+//        
+//        return "nuevoParticipante.html";
+//    }
+    /**
+     * 
+     * @param model
+     * @param p
+     * @param par
+     * @param idProcesion
+     * @param idParticipacion
+     * @return 
+     */
     @PostMapping("nuevoParticipante/{idProcesion}/{idParticipacion}")
-    public String anadirNuevoParticipante(Model model, Participante p, Participacion par, @PathVariable Long idProcesion, @PathVariable Long idParticipacion){
-        System.out.println("el id de la participacion es: "+par.getId());
-        System.out.println("Entra en el metodo anadirNuevoParticipante");
+    public String anadirParticipacionyParticipante(Model model, Participante p, Participacion par, @PathVariable Long idProcesion, @PathVariable Long idParticipacion){
+        System.out.println("---AÑADOR PARTICIPANTE Y/O PARTICIPACION---");
+        
+        System.out.println("participacion: "+par.toString());
         System.out.println("participante: "+p.toString());
-        Procesion pro = reppro.getById(idProcesion);
-        Participante comparador = repparticipante.findFirstByDni(p.getDni());
-         
-        // SI EL PARTICIPANTE QUE LLEGA YA EXISTE, BUSCO SUS PARTICIPACIONES Y SE LAS ASIGNO AL NUEVO PARTICIPANTE que va a sobreescribir el antiguo registro       
-         if (comparador!=null){   
-            System.out.println("Participante antiguo");
-            p.setParticipaciones(comparador.getParticipaciones());       
-        };   
-        repparticipante.save(p);
-         System.out.println("Participante guardado: "+p); 
+        Procesion pro = reppro.getById(idProcesion);    
+       
+         if (repparticipante.findFirstByDni(p.getDni())!=null){   
+            System.out.println("Participante antiguo");           
+            }   
+        
+        repparticipante.save(p); //PERSISTO EL PARTICIPANTE EN BD - SI YA EXISTE SE SOBREESCRIBE
+        
+        System.out.println("Participante guardado: "+p); 
         par.setId(idParticipacion);//le vuelvo a asignar su propio ID porque a la hora de editar, estaba cogiendo el ID del participante
         System.out.println("participacion :"+par);
         String nombreSeccion = par.getNombreSeccion(); //Recojo el nombre de seccion indicado en el formulario
-        Seccion seccion = secrep.findByIdProcesionAndName(pro, nombreSeccion);
+        Seccion seccion = secrep.findByIdProcesionAndName(pro, nombreSeccion);//busco la seccion por el nombre introducido por el usuario
         System.out.println("Seccion encontrada: "+seccion);
         System.out.println("la procesion que llega es: "+pro);
         par.setIdSeccion(seccion);
@@ -168,6 +183,8 @@ public class NuevoParticipanteController implements Serializable {
         model.addAttribute("participacion", participacion);
         model.addAttribute("procesion", nuevaProcesion);
         System.out.println("las secciones de la procesion son: "+procesion.getSecciones());
+        System.out.println("participacion: "+participacion.toString());
+        System.out.println(p.getParticipaciones());
         
         return "nuevoParticipante.html";
     }

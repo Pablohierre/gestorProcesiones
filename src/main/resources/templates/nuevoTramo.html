@@ -2,9 +2,12 @@
 <head>
 	<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Crear Seccion de la Procesion</title>
-        <link rel="stylesheet" href="estilos.css">
+        <title>Crear Tramos de la Procesion</title>
+        <link rel="stylesheet" type="text/css" href="../styles/estilos.css">
+
     <style>
+    	
+
     	.accordion {
 			  background-color: #eee;
 			  color: #444;
@@ -17,6 +20,8 @@
 			  font-size: 15px;
 			  transition: 0.4s;
 			  border-radius: 6px;
+			  margin-top:  5px;
+			  margin-bottom: 5px;
 			}
 
 			.active, .accordion:hover {
@@ -37,17 +42,10 @@
 			    margin: auto;
 			    margin-top: 10%;
 			    padding: 20px;
+			    border-color:#750386 ;
 			}
 
-			.siguiente{
-				border-radius: 8px;
-			    border-style: solid;
-			    width: fit-content;
-			    float: right;
-			    margin-top: 15%;
-			    margin-right: 5%;
-			    padding: 10px;
-			}
+			
 
 			input{
 				margin: 15px;
@@ -57,10 +55,99 @@
 				margin-top: 10%;
 			}
 
+			body{
+				margin: 0px;
+				background: #F8F6FD;
+				max-width: 100%;
+    			overflow-x: hidden;
+			}
+
+			 .topbar{
+                width: 100%;
+                height: fit-content;
+                background-color: #750386;
+                padding: 5px 0px 5px 15px;
+
+            }
+    
+
+            .footer{
+                width: inherit;
+                height: fit-content;
+                background-color: #750386;
+                margin-top: 25px;
+                color: white;
+                display: block;
+                text-align: center;
+                padding-top: 7px;
+                padding-bottom: 7px;
+               margin: 0;
+                bottom: 0;
+                width: 100%;
+
+            }
+
+            .footer a{
+                color: white;
+                display: block;
+                margin: auto;
+                text-align: center;
+            }
+
+            #titulo{
+                float: right;
+                width: fit-content;
+                color: #fff;
+                margin-right: 6%;
+                display: inline-flex;
+            }
+
+            #titulo h1{
+               /* margin-left: 2%;*/
+                margin-top: 10%;
+            }
+
+			.siguiente{
+				border-radius: 8px;
+			    border-style: solid;
+			    width: fit-content;
+			    height: 38px;
+			    line-height:  38px;
+			    text-align: center;
+			  
+			    margin-top: 10%;
+			  	margin-bottom: 5%;
+			    padding: 10px;
+			    background-color: #ca9f0c;
+			    border-color: #ca9f0c;
+			    display: block;
+			    margin-left: auto;
+			    margin-right: auto;
+			}
+
+			.siguiente a{
+				color: #FFFEFA;
+				vertical-align: text-bottom;
+				text-decoration: none;
+			}
+
+			.titulo{
+				margin: auto;
+			}
+
     </style>
 </head>
 
 <body>
+	<div class="topbar">
+           <a th:href="@{/admin}">
+            <img src="../img/laVenialogopequeño.png"  width="191 px">     
+        </a>
+            <div id="titulo">
+                <h1>Gestión de Procesiones</h1>   
+            </div> 
+        </div>
+
 	<div class="titulo">
 	<h1  th:text="'Tramos de la '+ ${procesion.nombre}">  Tramos de la procesion </h1>
 	</div>
@@ -77,7 +164,7 @@
                        
 			  	<label> <Strong> Nombre </Strong> </label>
 			  	<input type="text" th:field="*{nombre}"/>
-			  	<label> <Strong> Nº de filas </Strong> </label>
+			  	<label> <Strong> Nº de filas </Strong> </label><br>
 			  	<input type="text" th:field="*{numFilas}"> 
 			  	<label> <Strong> Participantes por fila </Strong> </label>
 			  	<input type="text" th:field="*{tramoscol}"> <br>
@@ -96,10 +183,16 @@
         </div>
 	<div class="siguiente">
             <a th:href="@{/crearTronos/{id}(id=${procesion.id})}">
-			<p style="display: inline"> Crear Tronos </p>
-			<img src="../img/right-arrow.png" alt="siguiente" style="height: 64px";>
+				<p style="display: inline"> Crear Tronos </p>
+				<img src="../img/right-arrow.png" alt="siguiente" style="height: 32px;vertical-align: middle;">
             </a>
-		</div>
+	</div>
+
+	<div class="footer">
+    	<p> Feito com amor pela equipe da Falo Portugues SL </p>
+    	<p> © Paulo & Robertinho Produçoes </p>
+    	<a href="https://www.tiktok.com/@darioemehache/video/6766665658685033733?is_from_webapp=1&sender_device=pc&web_id=7006034867881051653"> Términos y cóndiciones </a>
+    </div>
 </body>
 		<script>
 		var acc = document.getElementsByClassName("accordion");

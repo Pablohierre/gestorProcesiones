@@ -3,13 +3,114 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
  		
- 		<styles>
- 		</styles>
+ 		<style>
+            body{
+                margin: 0px;
+                background: #F8F6FD;
+                scroll-behavior: ;
+
+            }
+
+            *{
+                /*font-size: 16px;*/
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .footer{
+                width: inherit;
+                height: fit-content;
+                background-color: #750386;
+                margin-top: 15px;
+                color: white;
+                display: block;
+                text-align: center;
+                padding-top: 7px;
+                padding-bottom: 7px;
+                
+                bottom: 0;
+                width: 100%;
+
+            }
+
+            .footer a{
+                color: white;
+                display: block;
+                margin: auto;
+                text-align: center;
+            }
+
+                                .topbar{
+                width: 100%;
+                height: fit-content;
+                background-color: #750386;
+                padding: 5px 0px 5px 15px;
+            }
+            h1{
+               /* margin-left: 2%;*/
+                margin-top: 15%;
+            }
+
+            #titulo{
+                float: right;
+                width: fit-content;
+                color: #fff;
+                margin-right: 6%;
+                display: inline-flex;
+
+            }
+
+            .contenido{
+                margin: auto;
+                margin-bottom: 5%;
+                display: block;
+                width: fit-content;
+            }
+
+            .fila{
+                margin: 5px;
+
+            }
+
+            .submit{
+                margin: 10px;
+               
+            }
+
+            .submit input{
+                 background-color:#ca9f0c;
+                 padding: 8px;
+                 border-radius: 4px;
+                 width: 15%;
+                 color: fff;
+                 font-weight: 600;
+                 border: none;
+                 display: block;
+                 margin: auto;
+                 margin-top: 30px;
+            }
+
+            .contenido p{
+                font-weight: 600;
+            }
+            
+
+
+ 		</style>
 	</head>
 
 	<body>
-		<div class="titulo">
-			<h1>Añadir Participante</h1>
+        <div class="topbar">
+           
+            <img src="../img/laVenialogopequeño.png"  width="191 px">     
+            <div id="titulo">
+                <h1>Gestión de Procesiones</h1>    
+            </div>
+        </div>
+        
+
+        <div class="contenido">
+		<div class="subtitulo">
+			<h2>Añadir Participante</h2>
 		</div>
 		  <div class="buscador">
 		  		<form id="buscador" th:action="@{/buscarParticipante/{id}(id=${procesion.id})}" th:object="${participante}" method="post">
@@ -20,44 +121,69 @@
     	
     	<div class="formulario">
     		<form action="#" th:action="@{/nuevoParticipante/{id}/{idpart}(id=${procesion.id}, idpart=${participacion.id})}" method="post" id="formParticipante">
-                    <input type="hidden" th:field="*{participante.id}">
-                    <input type="text" th:field="*{participante.nombre}" placeholder="Nombre" /> <!-- th:value="${}" -->
-                    <input type="text" th:field="*{participante.apellidos}" placeholder="Apellidos"/>
-                    <input type="text" th:field="*{participante.numHermano}" placeholder="Nº hermano"/>
-                    <input type="text" th:field="*{participante.dni}" placeholder="DNI"/>
-                    <input type="text" th:field="*{participante.telefono}" placeholder="Teléfono"/>
-                    <input type="text" th:field="*{participante.email}" placeholder="email"/>
-                    <label for="fechanac"  value="Fecha de nacimiento"/>
-                    <input type="date" th:field="*{participante.fechaNac}" name="fechanac"/>
-                    <label for="fechanac" value="Fecha de alta de hermano"/>
-                    <input type="date" th:field="*{participante.fechaHermano}" name="fechaAlta"/>
-                    <!--<input type="submit" value="registrar participante">                           -->
-                    <input type="hidden" th:field="*{participacion.id}">
-                    <input  list="secciones"  name="secciones"  th:field="*{participacion.nombreSeccion}" placeholder="Seccion" />
-                        <datalist id="secciones" >                         
-                             <option th:each="seccion:${procesion.secciones}" th:value="${seccion.nombre}"/>                                                
-                        </datalist>       
-    			     <input list="tipo" name="tipo" th:field="*{participacion.tipo}" placeholder="Tipo"/> 
-                        <datalist id="tipo">
-                            <option value="Nazareno vela"/>
-                            <option value="Monaguillo"/>
-                            <option value="Cirial"/>
-                            <option value="Turiferario"/>
-                            <option value="Portador"/>
-                        </datalist>                           
-        			<input type="text" th:field="*{participacion.talla}" placeholder="Talla"/>
-        			<input type="text" th:field="*{participacion.tunica}" placeholder="Túnica"/>
-        			<input type="text" th:field="*{participacion.cingulo}" placeholder="Cíngulo"/>
-        			<input type="text" th:field="*{participacion.capirote}" placeholder="Capirote"/>
-                                <input type="text" th:field="*{participacion.codPuesto}" placeholder="Puesto"/>
 
-                    <input type="submit" value="submit">
+                    <p> Datos del participante </p>
+                    <div class="fila">
+                        <input type="hidden" th:field="*{participante.id}" name="participante">
+                        <input type="text" th:field="*{participante.nombre}" placeholder="Nombre" /> <!-- th:value="${}" -->
+                        <input type="text" th:field="*{participante.apellidos}" placeholder="Apellidos"/>
+                        <input type="text" th:field="*{participante.numHermano}" placeholder="Nº hermano"/>
+                        
+                    </div>
+                    <div class="fila">
+                        <input type="text" th:field="*{participante.dni}" placeholder="DNI"/>
+                        <input type="text" th:field="*{participante.telefono}" placeholder="Teléfono"/>
+                        <input type="text" th:field="*{participante.email}" placeholder="email"/>
+                    </div>
+                    <div class="fila">
+                        <label for="fechanac"  value="Fecha de nacimiento"/>Fecha de nacimiento</label>
+                        <input type="date" th:field="*{participante.fechaNac}" name="fechanac"/>
+                        
+                    </div>
+                    <div class="fila">
+                        <label for="fechanac" value="Fecha de alta de hermano"/>Fecha de alta de hermano</label>
+                        <input type="date" th:field="*{participante.fechaHermano}" name="fechaAlta"/><br><br>
+                    </div>
+
+                    <p> Datos de la participacion </p>
+                    <div class="fila">
+
+                        <input type="hidden" th:field="*{participacion.id}">
+                        <input  list="secciones"  name="secciones"  th:field="*{participacion.nombreSeccion}" placeholder="Seccion" />
+                            <datalist id="secciones" >                         
+                                 <option th:each="seccion:${procesion.secciones}" th:value="${seccion.nombre}"/>                                                
+                            </datalist>       
+        			     <input list="tipo" name="tipo" th:field="*{participacion.tipo}" placeholder="Tipo"/> 
+                            <datalist id="tipo">
+                                <option value="Nazareno vela"/>
+                                <option value="Monaguillo"/>
+                                <option value="Cirial"/>
+                                <option value="Turiferario"/>
+                                <option value="Portador"/>
+                            </datalist>                           
+            			<input type="text" th:field="*{participacion.talla}" placeholder="Talla"/>
+            			<input type="text" th:field="*{participacion.tunica}" placeholder="Túnica"/>
+
+                    </div>
+                    <div class="fila">    
+            			<input type="text" th:field="*{participacion.cingulo}" placeholder="Cíngulo"/>
+            			<input type="text" th:field="*{participacion.capirote}" placeholder="Capirote"/>
+                        <input type="text" th:field="*{participacion.codPuesto}" placeholder="Puesto"/>
+                    </div>
+                    <div class="submit">
+                    <input type="submit" value="Añadir">
+                    </div>
     		        
                          
                 </form>
            
-    	</div>	
-		
+    	</div>
+        </div>	
+		<div class="footer">
+        <p> Feito com amor pela equipe da Falo Portugues SL </p>
+        <p> © Paulo & Robertinho Produçoes </p>
+        <a href="https://www.tiktok.com/@darioemehache/video/6766665658685033733?is_from_webapp=1&sender_device=pc&web_id=7006034867881051653"> Términos y cóndiciones </a>
+    </div>
 	</body>
         <script>
           //var botonsubmit = document.getElementById("submitformularios").addEventListener( 'click', function () {

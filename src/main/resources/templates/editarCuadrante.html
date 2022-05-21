@@ -9,12 +9,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+            *{
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
 
-        <style>
+            .titulo{
+                margin-top: 20px;
+                margin-left: 35px;
+            }
+
             .inline{
-                display:inline-flex
+                display:inline-flex;
+                margin-bottom: 20px;
             }
           .cuadrante{
             max-width: 75%;
@@ -48,6 +56,11 @@
           .lista{
               padding:15px;
               width: 25%;
+              margin-left: 30px;
+              height: fit-content;
+              align-self: start;
+              position: sticky;
+              top: 30px;
           }
           .participantes{
               height: fit-content;
@@ -74,11 +87,68 @@
                 display: block;
                 width: 75%;
                 margin-top: 25px;
-    	}
+                height: 30px;
+                margin-top: 25px;
+                margin-bottom: 15px;
+    	   }
+
+            .topbar{
+                width: 100%;
+                height: fit-content;
+                background-color: #750386;
+                padding: 5px 0px 5px 15px;
+
+            }
+    
+
+            .footer{
+                width: inherit;
+                height: fit-content;
+                background-color: #750386;
+                margin-top: 25px;
+                color: white;
+                display: block;
+                text-align: center;
+                padding-top: 7px;
+                padding-bottom: 7px;
+               margin: 0;
+                bottom: 0;
+                width: 100%;
+
+            }
+
+            .footer a{
+                color: white;
+                display: block;
+                margin: auto;
+                text-align: center;
+            }
+
+            #titulo{
+                float: right;
+                width: fit-content;
+                color: #fff;
+                margin-right: 6%;
+                display: inline-flex;
+            }
+
+            #titulo h1{
+               /* margin-left: 2%;*/
+                margin-top: 10%;
+            }
+
+
         </style>
     </head>
 
     <body>
+        <div class="topbar">
+           
+            <img src="../img/laVenialogopequeño.png"  width="191 px">     
+            <div id="titulo">
+                <h1>Gestión de Procesiones</h1>   
+            </div> 
+        </div>
         <div class="titulo">
             <h1 th:text=" 'Cuadrante de trono '+${trono.nombre}">Cuadrante del </h1>
         </div>
@@ -98,17 +168,18 @@
                 </table>
             </div>
             <div class="lista">
-                <button class="asignar"> Asignar puestos </button>
+                <button class="asignar" onclick="asignar()"> Asignar puestos </button>
                 <Strong><p>Portadores Inscritos</p></Strong>
                 <div class="participantes connected-sortable droppable-area1" id="sortable">
 
                     <div class="portador" th:each="participacion:${participaciones}">
                         <div class="nombre" style="width:100%;">
                             <p th:text="${participacion.idParticipante.nombre}"> Pablo Hierrezuelo </p>
+                            <p hidden class="idParticipacion" th:text="${participacion.id}">
                         </div> 
                         <div class="otrainfo" style="width:100%;display:inline-flex;">
                             <div class="talla" style="width:50%;float:left;"> <p th:text="'Talla :1'+${participacion.talla}"> Talla: 1.60 </p></div>
-                            <div class="antiguedad" style="width:50%;float:right;"><p th:text="'Salidas: '+${#lists.size(participacion.idParticipante.participaciones)}"> Salidas: 5 </p></div>
+                            <div class="antiguedad" style="width:50%;float:right;"><p th:text="'Salidas: '+${#lists.size(participacion.idParticipante.participaciones)}"> Salidas: </p></div>
                 </div>
             </div>
             
@@ -117,37 +188,24 @@
         </div>
 
 
-<script th:inline="javascript">
+    <div class="footer">
+        <p> Feito com amor pela equipe da Falo Portugues SL </p>
+        <p> © Paulo & Robertinho Produçoes </p>
+        <a href="https://www.tiktok.com/@darioemehache/video/6766665658685033733?is_from_webapp=1&sender_device=pc&web_id=7006034867881051653"> Términos y cóndiciones </a>
+    </div>
+ <script th:inline="javascript">
     
+ $( init );
     
-    /*<![CDATA[*/
-    const participaciones=/*[[${participaciones}]]*/10;
-     
-    var inicioMesa=/*[[${inicioMesa}]]*/10;
-    var finalMesa=/*[[${finalMesa}]]*/20;
-    var varales=/*[[${letrasVarales}]]*/A;
-    var puesto = /*[[${puesto}]]*/A;
-    var letra = /*[[${letras}]]*/A;
-    console.log("HOLA")
-    if (puesto>inicioMesa && puesto<finalMesa) {
-        console.log("Entra en el if")
-     document.getElementById("puesto").style.backgroundColor = "red";
-    }
+    function init() {
+      $( ".droppable-area1, .droppable-area2" ).sortable({
+          connectWith: ".connected-sortable",
+          stack: '.connected-sortable ul'
+        }).disableSelection();
+    } 
     
-    
-    
-    $( init );
-
-function init() {
-  $( ".droppable-area1, .droppable-area2" ).sortable({
-      connectWith: ".connected-sortable",
-      stack: '.connected-sortable ul'
-    }).disableSelection();
-}
-
-
-
-
-</script>
+      
+ </script>  
     </body>
+   
 </html>

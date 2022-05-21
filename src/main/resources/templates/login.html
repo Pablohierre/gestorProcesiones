@@ -16,7 +16,7 @@
 
         .login-page {
           width: 360px;
-          padding: 8% 0 0;
+          padding: 2% 0 0;
           margin: auto;
         }
         .form {
@@ -108,7 +108,7 @@
           color: #EF3B3A;
         }
         body {
-          background: #f9e1fc; /* fallback for old browsers */
+          background-color: #F8F6FD;; /* fallback for old browsers */
           /*background: rgb(141,194,111);
           background: linear-gradient(90deg, rgba(141,194,111,1) 0%, rgba(118,184,82,1) 50%);*/
           font-family: "Roboto", sans-serif;
@@ -124,7 +124,7 @@
     </head>
     <body>
         <div class="login-page">
-          <img src="laVenialogopequeño.png">
+          <img src="../img/laVenialogopequeño.png">
             <div class="form">
                 
                 <form class="login-form" th:action="@{/login}" th:object="${usuario}" method="post">
