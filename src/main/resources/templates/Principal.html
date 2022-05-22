@@ -25,6 +25,9 @@
     	#rechazar{
     		background-color: #c42406;
     		color: white;
+            height: fit-content;
+            width: fit-content;
+
     	}
 
         .titulo{
@@ -84,6 +87,10 @@
 
             }
 
+            .footer p{
+                color: white;
+            }
+
             .footer a{
                 color: white;
                 display: block;
@@ -124,6 +131,86 @@
             .ajustes{
                 float: right;
             }
+
+            .dropdown {
+              position: relative;
+              display: inline-block;
+            }
+
+            .dropdown-content {
+              display: none;
+              position: absolute;
+              background-color: #f1f1f1;
+              min-width: 160px;
+              box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+              z-index: 1;
+            }
+
+            .dropdown-content a, .dropdown-content p {
+              color: black;
+              padding: 12px 16px;
+              text-decoration: none;
+              
+              display: block;
+            }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {background-color: #49A2E2;}
+            .dropdown-content p:hover {background-color: #49A2E2;}
+
+            /* Show the dropdown menu on hover */
+            .dropdown:hover .dropdown-content {display: block;}
+
+            /* Change the background color of the dropdown button when the dropdown content is shown */
+            .dropdown:hover .dropbtn {background-color: #49A2E2;}
+
+            .imagen{
+                display: inline-flex;
+                margin-top: 10%;
+            }
+
+            /* ########## MODAL ########### */
+            .modal {
+              display: none; /* Hidden by default */
+              position: fixed; /* Stay in place */
+              z-index: 1; /* Sit on top */
+              padding-top: 100px; /* Location of the box */
+              left: 0;
+              top: 0;
+              width: 100%; /* Full width */
+              height: 100%; /* Full height */
+              overflow: auto; /* Enable scroll if needed */
+              background-color: rgb(0,0,0); /* Fallback color */
+              background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content */
+            .modal-content {
+              background-color: #fefefe;
+              margin: auto;
+              padding: 20px;
+              border: 1px solid #888;
+              width: 80%;
+            }
+
+            /* The Close Button */
+            .close {
+              color: #aaaaaa;
+              float: right;
+              font-size: 28px;
+              font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+              color: #000;
+              text-decoration: none;
+              cursor: pointer;
+            }
+
+
+
+
         </style>
         
     </head>
@@ -131,14 +218,57 @@
     <body>
         
         <div class=contents>
-            <div class="topbar">
-           
-            <img src="../img/laVenialogopequeño.png"  width="191 px">     
-            <div id="titulo">
-                <h1>Gestión de Procesiones</h1>   
+            <div class="topbar"> 
+                      
+            <img src="../img/laVenialogopequeño.png"  width="191 px"> 
+            
+                    <div class="dropdown"> 
+            <img src="../img/user.png" width="40px" height="40px" style="margin-left:90%">
+            <div class="dropdown-content">
+                    <a th:href="@{/login}">Cerrar sesión</a>
+                    <p id="myBtn">Ajustes de personalización</p>
+
+                            <!-- #################### EL MODAL VA AQUÍ ############################# -->
+
+                            <div id="myModal" class="modal">
+
+                              <!-- Modal content -->
+                              <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p> Personalización de la plataforma </p>
+                                <form  th:action="@{/personalizar}" th:object="${usuario}" method="post">
+                                    <input type="hidden" th:field="${corporacion.id}"
+                                    
+                                    <label for="nombreCorporacion"> Nombre de la entidad </label>
+                                    <input type="text" name="nombreCorporacion" th:field="${corporacion.nombreCorporacion}"><br>
+
+                                    <label for="colorprimario"> Color primario </label>
+                                    <input type="color" name="colorprimario"  th:field="${corporacion.colorPrimario}"><br>
+
+                                    <label for="colorsecundario"> Color secundario </label>
+                                    <input type="color" name="colorsecundario"  th:field="${corporacion.colorSecundario}"><br>
+
+                                    <label for="escudo"> Escudo de la corporación </label>
+                                    <input type="file" name="escudo" accept="image/png, image/jpeg" th:field="${corporacion.escudo}"><br>
+
+                                    <input type="submit" name="" value="Personalizar">
+                                </form>
+                              </div>
+
+                            </div>
+
+                </div>
+            </div> 
+                    
+
+              <div id="titulo">
+                <h1>Gestión de Procesiones</h1> 
+                 
             </div> 
             
-
+            
+       </div>
+       
         
     </div>
             
@@ -222,8 +352,37 @@
     </body>
    
     <script>
+        /* ################# SCRIPT MODAL ##################*/
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+            console.log(" función on-click")
+          modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
 
 
+        
+        /* ################# SCRIPT MENU DROPDOWN ##################*/
         function cambiarVisibilidad() {
               var pasadas = document.getElementById("pasadas");
               var activas= document.getElementById("activas");
@@ -238,7 +397,7 @@
               }
             }
         
-
+        /* ################# SCRIPT REDIRECCIONES ##################*/
         function rowClicked(value) {
             location.href = "/procesion/" + value;
         }

@@ -1,0 +1,40 @@
+@charset "utf-8";
+
+.topbar{
+                width: 100%;
+                height: fit-content;
+                background-color: #750386;
+                padding: 5px 0px 5px 15px;
+            }
+            h1{
+               /* margin-left: 2%;*/
+                margin-top: 10%;
+            }
+
+            #titulo{
+                float: right;
+                width: fit-content;
+                color: #fff;
+                margin-right: 6%;
+                display: inline-flex;
+
+            }
+.footer{
+                width: inherit;
+                height: fit-content;
+                background-color: #750386;
+                margin-top: 25px;
+                color: white;
+                display: block;
+                text-align: center;
+                padding-top: 7px;
+                padding-bottom: 7px;
+
+            }
+
+            .footer a{
+                color: white;
+                display: block;
+                margin: auto;
+                text-align: center;
+            }

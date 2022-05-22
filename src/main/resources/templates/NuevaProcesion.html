@@ -2,18 +2,34 @@
 	<head>
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 		<link rel="stylesheet" href="../styles/estilos.css">
+ 	<!--	<link rel="stylesheet" href="../styles/estilos.css"> -->
 
  		<style>
  			    	
+			    *{
+ 			    	font-family: helvetica;
+ 			    	font-size: 16px;
+ 			    }	
 
 
 			body{
 				margin: 0px;
 				background: #F8F6FD;
 				max-width: 100%;
-    			overflow-x: hidden;
+    			/*overflow-x: hidden;*/
 			}
+
+
+			.bloqueCentral{
+	border-radius: 8px;
+    border-style: solid;
+    width: fit-content;
+    margin: auto;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    padding: 20px;
+    border-color: #750386;
+}
 
 			.footer{
 				width: inherit;
@@ -58,6 +74,7 @@
     	.titulo{
     		display: block;
     		margin: auto;
+    		text-align: center;
     	}
     	#titulo{
                 float: right;
@@ -70,14 +87,30 @@
             #titulo h1{
                /* margin-left: 2%;*/
                 margin-top: 10%;
+                font-size: 2em;
+
             }
             .topbar{
-				width: 100%;
+				max-width: 100%;
 				height: fit-content;
 				background-color: #750386;
 				padding: 5px 0px 5px 15px;
 
 			}
+			.bloqueCentral .seccionFormulario{
+				margin: 15px;
+			}
+
+			.submitFormulario input{
+				display: block;
+				margin: auto;
+			}
+			.titulo h1{
+				font-size: 3em;
+				font-weight: 600;
+			}
+
+			
 
  		</style>
 	</head>

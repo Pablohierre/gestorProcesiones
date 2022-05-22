@@ -4,13 +4,16 @@
  */
 package com.example.GestorProcesionesPI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Participacion;
 import models.Procesion;
 import models.Seccion;
 import models.Tramo;
 import models.Trono;
+import models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -43,6 +48,10 @@ public class PrincipalController {
     @Autowired
     TronoRepository reptrono;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
+    
     @GetMapping("/admin")
     public String principal( Model model){ 
         long millis=System.currentTimeMillis();  
@@ -61,6 +70,12 @@ public class PrincipalController {
             }
             
         }
+        
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        System.out.println("Datos de la corporacion :"+corporacion.getNombreCorporacion()+" "+corporacion.getColorPrimario()+" "+corporacion.getColorSecundario());
+        
+        
+        model.addAttribute("corporacion", corporacion);
         model.addAttribute("activas",procesionesActivas);
         model.addAttribute("pasadas",procesionesPasadas);
         return "Principal.html";
@@ -94,6 +109,36 @@ public class PrincipalController {
         return "redirect:/admin";
     }
     
-    
+    @PostMapping("personalizar")
+    public String personalizar(Model model, @ModelAttribute Corporacion corporacion, 
+                               @RequestParam("escudo") MultipartFile file){
+        
+        System.out.println("Datos de la corporacion :" + corporacion.getNombreCorporacion() + " "
+                + corporacion.getColorPrimario() + " " + corporacion.getColorSecundario());
+
+        try {
+
+            Byte[] byteObjects = new Byte[file.getBytes().length];
+
+            int i = 0;
+
+            for (byte b : file.getBytes()) {
+                byteObjects[i++] = b;
+            }
+
+            //recipe.setImage(byteObjects);
+            corporacion.setEscudo(byteObjects);
+
+        } catch (IOException e) {
+            //todo handle better
+
+            e.printStackTrace();
+        }
+
+        repCorp.save(corporacion);
+
+        
+        return "redirect:/admin";
+    }
     
 }
