@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Procesion;
 import models.Seccion;
 import models.Trono;
@@ -35,6 +36,9 @@ public class NuevoTronoController implements Serializable {
     @Autowired
     TronoRepository reptrono;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
     @GetMapping("/crearTronos/{id}")
     public String mostrarTronos(Model model, @PathVariable Long id){
         System.out.println("Entra en el método get");
@@ -49,6 +53,8 @@ public class NuevoTronoController implements Serializable {
                 }
             }
         }
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         model.addAttribute("trono",trono);
         model.addAttribute("secciones", seccionesConTrono);
         model.addAttribute("procesion", procesion);
@@ -68,6 +74,8 @@ public class NuevoTronoController implements Serializable {
         model.addAttribute("procesion", procesion);
         model.addAttribute("secciones", seccionesConTrono);
         model.addAttribute("trono", nuevo);
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         
         
         return "nuevoTrono.html";

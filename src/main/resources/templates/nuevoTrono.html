@@ -5,6 +5,11 @@
         <title>Crear Seccion de la Procesion</title>
         
     <style>
+    	:root{
+                --colorPrimario: [[${corporacion.colorPrimario}]];
+                --colorSecundario: [[${corporacion.colorSecundario}]];                
+            }
+    	
     	*{
     		font-family: helvetica;
     	}
@@ -41,7 +46,7 @@
 			.bloqueCentralSeccion{
 				border-radius: 8px;
 			    border-style: solid;
-			    border-color: #750386;
+			    border-color: var(--colorPrimario);
 			    width: 65%;
 			    margin: auto;
 			    margin-top: 4%;
@@ -76,8 +81,8 @@
 			    margin-top: 10%;
 			  	margin-bottom: 5%;
 			    padding: 10px;
-			    background-color: #ca9f0c;
-			    border-color: #ca9f0c;
+			    background-color: var(--colorSecundario);
+			    border-color: var(--colorSecundario);
 			    display: block;
 			    margin-left: auto;
 			    margin-right: auto;
@@ -104,7 +109,7 @@
 			 .topbar{
                 width: 100%;
                 height: fit-content;
-                background-color: #750386;
+                background-color: var(--colorPrimario);
                 padding: 5px 0px 5px 15px;
 
             }
@@ -113,7 +118,7 @@
             .footer{
                 width: inherit;
                 height: fit-content;
-                background-color: #750386;
+                background-color: var(--colorPrimario);
                 margin-top: 25px;
                 color: white;
                 display: block;

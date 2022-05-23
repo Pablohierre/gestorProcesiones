@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Procesion;
 import models.Seccion;
 import models.Tramo;
@@ -35,8 +36,11 @@ public class NuevoTramoController implements Serializable {
     @Autowired
     SeccionRepository repsec;
     
-     @Autowired
+    @Autowired
     ProcesionRepository reppro;
+     
+    @Autowired
+    CorporacionRepository repCorp;
     
     @GetMapping("/crearTramos/")//{id}
     public String mostrarTramos(Model model){//, @ModelAttribute Procesion procesion
@@ -62,6 +66,8 @@ public class NuevoTramoController implements Serializable {
 //            System.out.println("La seccion"+s.getNombre()+" tiene "+s.getTramos().size()+" tramos asignados");
         
     }
+       Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
        model.addAttribute("tramo", tramoSeccion);
        model.addAttribute("seccionesProcesion", secciones);
        model.addAttribute("procesion", procesion);

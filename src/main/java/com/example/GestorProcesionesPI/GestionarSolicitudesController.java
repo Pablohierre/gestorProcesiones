@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Participacion;
 import models.Procesion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class GestionarSolicitudesController implements Serializable {
     List <Participacion> listaSolicitudes = new ArrayList<>();
     
    Procesion procesion = new Procesion();
+   
+   @Autowired
+   CorporacionRepository repCorp;
     
     @GetMapping("/gestionarSolicitudesOnline/{idProcesion}/{estado}")
     public String mostrarSolicitudesPorEstado (Model model, @PathVariable Long idProcesion, @PathVariable String estado){
@@ -45,11 +49,10 @@ public class GestionarSolicitudesController implements Serializable {
         model.addAttribute("procesion", procesion);
         String retornar ="gestionSolicitudes.html";
         System.out.println(estado);
-        
-//        if(estado=="espera"){
-//            System.out.println("entra en el if del espera");
-//            return "listaEspera.html";
-//        }
+               
+       
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         
         switch(estado){
             case "espera":

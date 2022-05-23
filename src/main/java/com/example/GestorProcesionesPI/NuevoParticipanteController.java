@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Participacion;
 import models.Participante;
 import models.Procesion;
@@ -41,6 +42,9 @@ public class NuevoParticipanteController implements Serializable {
     
     @Autowired
     ParticipacionRepository repparticipacion;
+    
+    @Autowired
+    CorporacionRepository repCorp;
    
     
     @GetMapping("nuevoParticipante/{id}")
@@ -53,6 +57,9 @@ public class NuevoParticipanteController implements Serializable {
         p.setSecciones(secciones);
         nuevaProcesion = p;
         System.out.println(p.toString());
+        
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
 
 //        Participacion participacion = new Participacion();
         Participante participante = new Participante();
@@ -117,32 +124,6 @@ public class NuevoParticipanteController implements Serializable {
     
     
     
-//    @PostMapping("/nuevaParticipacion/presencial/{idParticipante}")//{idprocesion}
-//    public String crearNuevaParticipacion(Model model,  Participacion par, @PathVariable Long idParticipante){
-//            System.out.println("Entrando en el metodo nuevaParticipacion");
-//            System.out.println("El valor de nuevaProcesion es: "+nuevaProcesion.toString());
-//        
-//            String nombreSeccion = par.getNombreSeccion(); //Recojo el nombre de seccion indicado en el formulario
-//            Seccion seccion = secrep.findByIdProcesionAndName(nuevaProcesion, nombreSeccion);
-//            System.out.println("Seccion encontrada: "+seccion);
-//            par.setIdSeccion(seccion);
-//
-//            Participante p = repparticipante.getById(idParticipante);
-//            System.out.println(p);
-//            par.setIdParticipante(p); // Le asigno a la participacion el id del participante que acabo de persistir y que me viene de la variable global seteada por el metodo anadirNuevoParticipante
-//            par.setIdProcesion(nuevaProcesion); // Le asigno a la participacion el id de la procesion, que me viene de la variable global seteada por el metodo anadirNuevoParticipante
-//            par.setModoSolicitud("presencial");
-//            par.setEstado("aprobado");
-//            
-//            
-//            System.out.println("Participación: "+par.toString());
-//            
-//            repparticipacion.save(par); //persisto la participación
-//        
-//    return "redirect:/procesion/"+nuevaProcesion.getId();
-//    }
-    
-    
     @PostMapping("nuevaParticipacion/registro-online/{idprocesion}/{idparticipante}")
     public String crearNuevaParticipacionUser(Model model,  Participacion par, @PathVariable Long idprocesion, @PathVariable Long idparticipante){
             System.out.println("Entrando en el metodo nuevaParticipacion");
@@ -181,10 +162,12 @@ public class NuevoParticipanteController implements Serializable {
         
         model.addAttribute("participante", nuevoParticipante);
         model.addAttribute("participacion", participacion);
-        model.addAttribute("procesion", nuevaProcesion);
+        model.addAttribute("procesion", procesion);
         System.out.println("las secciones de la procesion son: "+procesion.getSecciones());
         System.out.println("participacion: "+participacion.toString());
         System.out.println(p.getParticipaciones());
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         
         return "nuevoParticipante.html";
     }
@@ -202,6 +185,9 @@ public class NuevoParticipanteController implements Serializable {
         model.addAttribute("participante", participante); 
         model.addAttribute("procesion", procesion);
         model.addAttribute("participacion", participacion);
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
+        
         return "nuevoParticipante.html";
     }
             

@@ -6,6 +6,7 @@ package com.example.GestorProcesionesPI;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import models.Corporacion;
 import models.Participacion;
 import models.Participante;
 import models.Procesion;
@@ -32,6 +33,8 @@ public class PrincipalUsuarioController implements Serializable {
     @Autowired
     ProcesionRepository reppro;
     
+    @Autowired
+    CorporacionRepository repCorp;
     
     @GetMapping("/procesionesActivas/{idUsuario}")
     public String principalUsuarioProcesionesActivas (Model model, @PathVariable Long idUsuario){
@@ -59,6 +62,8 @@ public class PrincipalUsuarioController implements Serializable {
         model.addAttribute("participacion", participacion);
         model.addAttribute("procesiones", procesionesActivas);
         model.addAttribute("participante", participante);
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         
         
         return "principalUsuario.html";

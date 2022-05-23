@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import models.Procesion;
 import java.sql.Date;
 import java.util.List;
+import models.Corporacion;
 import models.Participacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -28,10 +29,15 @@ public class NuevaProcesionController {
     @Autowired
     private ProcesionRepository repPro;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
     @GetMapping("/nueva")
     public String nuevaProcesion(@ModelAttribute Procesion procesion, Model model){
          model.addAttribute("edit", false);
          model.addAttribute("titulo","Crear una Nueva Procesion");
+         Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         return "NuevaProcesion.html";
     }
     
@@ -72,6 +78,8 @@ public class NuevaProcesionController {
         
         model.addAttribute("procesion", procesion);
         model.addAttribute("edit", true);
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         model.addAttribute("titulo","Editando la procesión "+procesion.getNombre());
         
         return "NuevaProcesion.html";

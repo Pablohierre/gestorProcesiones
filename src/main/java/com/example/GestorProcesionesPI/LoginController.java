@@ -5,6 +5,7 @@
 package com.example.GestorProcesionesPI;
 
 import java.io.Serializable;
+import models.Corporacion;
 import models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,11 +24,16 @@ public class LoginController implements Serializable {
     @Autowired
     UsuarioRepository repuser;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
     @GetMapping("/login")
     public String mostrarLogin(Model model){
        
         Usuario usuario = new Usuario();
         model.addAttribute("usuario", usuario);
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         
         return "login.html";
     }

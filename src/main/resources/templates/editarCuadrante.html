@@ -10,6 +10,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <style>
+        :root{
+                --colorPrimario: [[${corporacion.colorPrimario}]];
+                --colorSecundario: [[${corporacion.colorSecundario}]];                
+            }
+
             *{
                 margin: 0;
                 font-family: Arial, Helvetica, sans-serif;
@@ -80,7 +85,7 @@
               margin:auto;
           }
           .asignar{
-    		background-color:#750386;
+    		background-color:var(--colorPrimario);
     		color: white;
                 border-radius: 3px;
                 margin:auto;
@@ -95,7 +100,7 @@
             .topbar{
                 width: 100%;
                 height: fit-content;
-                background-color: #750386;
+                background-color: var(--colorPrimario);
                 padding: 5px 0px 5px 15px;
 
             }
@@ -104,7 +109,7 @@
             .footer{
                 width: inherit;
                 height: fit-content;
-                background-color: #750386;
+                background-color: var(--colorPrimario);
                 margin-top: 25px;
                 color: white;
                 display: block;

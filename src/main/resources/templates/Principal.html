@@ -3,12 +3,18 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="estilos.css">
+       <!-- <link rel="stylesheet" href="../styles/headerfooter.css"> -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         
         
         
         <style>
+
+            :root{
+                --colorPrimario: [[${corporacion.colorPrimario}]];
+                --colorSecundario: [[${corporacion.colorSecundario}]];                
+            }
+
              table .botonera form{
             margin:5px;
         }
@@ -34,13 +40,6 @@
            
         }
 
-        .topbar{
-                width: 100%;
-                height: fit-content;
-                background-color: #750386;
-                padding: 5px 0px 5px 15px;
-            }
-
             .crearprocesion{
                 display: inline-flex;
                 margin-left: 2%;
@@ -58,6 +57,13 @@
                  margin-right: 20px;
             }
 
+            .topbar{
+                width: 100%;
+                height: fit-content;
+                background-color: var(--colorPrimario);
+                padding: 5px 0px 5px 15px;
+            }
+            
             h1{
                /* margin-left: 2%;*/
                 margin-top: 10%;
@@ -71,19 +77,16 @@
                 display: inline-flex;
             }
 
-            .footer{
+        .footer{
                 width: inherit;
                 height: fit-content;
-                background-color: #750386;
+                background-color: var(--colorPrimario);
                 margin-top: 25px;
                 color: white;
                 display: block;
                 text-align: center;
                 padding-top: 7px;
                 padding-bottom: 7px;
-                bottom: 0px;
-                position: fixed;
-                width: 100%;
 
             }
 
@@ -121,7 +124,7 @@
             .visibilidad button{
                 border-radius: 3px;
                 padding: 7px;
-                background-color:#ca9f0c;
+                background-color:var(--colorSecundario);
                 font-weight: 500;
                 border-color: white;
                 color: white;
@@ -155,14 +158,14 @@
             }
 
             /* Change color of dropdown links on hover */
-            .dropdown-content a:hover {background-color: #49A2E2;}
-            .dropdown-content p:hover {background-color: #49A2E2;}
+            .dropdown-content a:hover {background-color: var(--colorPrimario);}
+            .dropdown-content p:hover {background-color: var(--colorPrimario);}
 
             /* Show the dropdown menu on hover */
             .dropdown:hover .dropdown-content {display: block;}
 
-            /* Change the background color of the dropdown button when the dropdown content is shown */
-            .dropdown:hover .dropbtn {background-color: #49A2E2;}
+            /* Change the background color of the dropdown button when the dropdown content is shown 
+            .dropdown:hover .dropbtn {background-color: #49A2E2;}*/
 
             .imagen{
                 display: inline-flex;
@@ -190,8 +193,21 @@
               margin: auto;
               padding: 20px;
               border: 1px solid #888;
-              width: 80%;
+              width: fit-content;
             }
+
+            .modal-content input, .modal-content label{
+                margin-top: 7px;
+                margin-bottom: 7px;
+                margin-right: 7px;
+                vertical-align: middle;
+            }
+
+            .modal-content button{
+                border-radius: 3px;
+                border-width: 1px;
+            }
+
 
             /* The Close Button */
             .close {
@@ -235,7 +251,7 @@
                               <!-- Modal content -->
                               <div class="modal-content">
                                 <span class="close">&times;</span>
-                                <p> Personalización de la plataforma </p>
+                                <p> <strong> Personalización de la plataforma <strong> </p>
                                 <form  th:action="@{/personalizar}" th:object="${usuario}" method="post">
                                     <input type="hidden" th:field="${corporacion.id}"
                                     
@@ -243,15 +259,18 @@
                                     <input type="text" name="nombreCorporacion" th:field="${corporacion.nombreCorporacion}"><br>
 
                                     <label for="colorprimario"> Color primario </label>
-                                    <input type="color" name="colorprimario"  th:field="${corporacion.colorPrimario}"><br>
+                                    <input type="color" name="colorprimario" id="colorprimario"  th:field="${corporacion.colorPrimario}"><br>
 
                                     <label for="colorsecundario"> Color secundario </label>
-                                    <input type="color" name="colorsecundario"  th:field="${corporacion.colorSecundario}"><br>
+                                    <input type="color" name="colorsecundario" id="colorsecundario" th:field="${corporacion.colorSecundario}"><br>
 
                                     <label for="escudo"> Escudo de la corporación </label>
+                                    
                                     <input type="file" name="escudo" accept="image/png, image/jpeg" th:field="${corporacion.escudo}"><br>
-
-                                    <input type="submit" name="" value="Personalizar">
+                                    
+                                    <button class="default" onclick="defaultColors()"> Resetear colores </button>
+                                    
+                                    <input type="submit" id="submit" value="Personalizar">
                                 </form>
                               </div>
 
@@ -352,6 +371,16 @@
     </body>
    
     <script>
+
+        function defaultColors(){
+            document.getElementById("colorprimario").value="#750386";
+            document.getElementById("colorsecundario").value="#ca9f0c";
+            modal.style.display = "block";
+        }
+
+
+
+
         /* ################# SCRIPT MODAL ##################*/
         // Get the modal
         var modal = document.getElementById("myModal");

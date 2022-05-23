@@ -5,6 +5,7 @@
 package com.example.GestorProcesionesPI;
 
 import java.io.Serializable;
+import models.Corporacion;
 import models.Participacion;
 import models.Procesion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,15 @@ public class ParticipacionController implements Serializable {
     @Autowired
     ParticipacionRepository Partrep;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
     
     @PostMapping("/nuevaParticipacion/{idprocesion}")
     public String crearNuevaParticipacion(Model model, @ModelAttribute Procesion idprocesion, Participacion par){
+        
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         
        par.setIdProcesion(idprocesion);
        Partrep.save(par);

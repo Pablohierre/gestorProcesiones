@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Participacion;
 import models.Participante;
 import models.Procesion;
@@ -44,6 +45,9 @@ public class PrincipalProcesionController implements Serializable {
     @Autowired
     private TronoRepository reptrono;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
     
     Procesion procesion;
     
@@ -77,7 +81,8 @@ public class PrincipalProcesionController implements Serializable {
         for(Participacion p:participaciones){
             participantesProcesion.add(p.getIdParticipante());
         }
-        
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         System.out.println("Lista de tronos: "+tronos.toString());        
         model.addAttribute("procesion", procesion);
         model.addAttribute("participantes", participantesProcesion);

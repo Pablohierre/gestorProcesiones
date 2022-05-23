@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import models.Corporacion;
 import models.Participacion;
 import models.Procesion;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +35,9 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 public class PrincipalController {
+    
+    String colorPrimario ="#750386";
+    String colorSecundario="#ca9f0c";
     
     @Autowired
     ProcesionRepository reppro;
@@ -110,35 +116,47 @@ public class PrincipalController {
     }
     
     @PostMapping("personalizar")
-    public String personalizar(Model model, @ModelAttribute Corporacion corporacion, 
-                               @RequestParam("escudo") MultipartFile file){
+    public String personalizar(Model model, @ModelAttribute Corporacion corporacion){
         
         System.out.println("Datos de la corporacion :" + corporacion.getNombreCorporacion() + " "
                 + corporacion.getColorPrimario() + " " + corporacion.getColorSecundario());
 
-        try {
-
-            Byte[] byteObjects = new Byte[file.getBytes().length];
-
-            int i = 0;
-
-            for (byte b : file.getBytes()) {
-                byteObjects[i++] = b;
-            }
-
-            //recipe.setImage(byteObjects);
-            corporacion.setEscudo(byteObjects);
-
-        } catch (IOException e) {
-            //todo handle better
-
-            e.printStackTrace();
-        }
+        colorPrimario =corporacion.getColorPrimario();
+        colorSecundario = corporacion.getColorSecundario();
+        
+        System.out.println(colorPrimario);
+        System.out.println(colorSecundario);
+        
+//        try {
+//
+//            Byte[] byteObjects = new Byte[file.getBytes().length];
+//
+//            int i = 0;
+//
+//            for (byte b : file.getBytes()) {
+//                byteObjects[i++] = b;
+//            }
+//
+//            //recipe.setImage(byteObjects);
+//            corporacion.setEscudo(byteObjects);
+//
+//        } catch (IOException e) {
+//            //todo handle better
+//
+//            e.printStackTrace();
+//        }
 
         repCorp.save(corporacion);
 
         
         return "redirect:/admin";
+    }
+    
+     @RequestMapping(value = "../styles/headerfooter.css", method = RequestMethod.GET)
+    public String main(Model model, HttpServletResponse response) {
+        model.addAttribute("colorPrimario", colorPrimario);
+        model.addAttribute("colorSecundario", colorSecundario);
+        return "headerfooter.css";
     }
     
 }

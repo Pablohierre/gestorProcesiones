@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Procesion;
 import models.Seccion;
 import models.Trono;
@@ -32,6 +33,9 @@ public class SeleccionarCuadranteController implements Serializable {
     @Autowired
     ProcesionRepository repPro;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
     @GetMapping("/seleccionarCuadrante/{idProcesion}")
     public String seleccionarCuadrante (Model model, @PathVariable Long idProcesion){
         Procesion procesion = repPro.getById(idProcesion);
@@ -45,6 +49,8 @@ public class SeleccionarCuadranteController implements Serializable {
         }
         System.out.println(tronos.toString());
         model.addAttribute("tronos", tronos);
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         
         return "seleccionarCuadrante.html";
     }

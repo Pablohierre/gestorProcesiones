@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Participacion;
 import models.Trono;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class editarCuadranteController implements Serializable {
     @Autowired
     ParticipacionRepository repparticipacion;
     
+    @Autowired
+    CorporacionRepository repCorp;
     
     @GetMapping("editarCuadrante/{idTrono}")
     public String editarCuadrante (Model model, @PathVariable Long idTrono){
@@ -58,6 +61,8 @@ public class editarCuadranteController implements Serializable {
         
         System.out.println(letrasVarales);
         
+         Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         model.addAttribute("numVarales", varales);
         model.addAttribute("inicioMesa", trono.getPuestoComienzoMesa());
         model.addAttribute("finalMesa", trono.getPuestoFinalMesa());

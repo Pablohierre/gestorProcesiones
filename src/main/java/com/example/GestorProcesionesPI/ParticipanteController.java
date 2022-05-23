@@ -6,6 +6,7 @@ package com.example.GestorProcesionesPI;
 
 import java.io.Serializable;
 import java.util.List;
+import models.Corporacion;
 import models.Participacion;
 import models.Participante;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class ParticipanteController implements Serializable {
     @Autowired
     ParticipacionRepository participacionrep;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
     @GetMapping("/participante/{idparticipante}")
     public String mostrarParticipante(Model model, @PathVariable Long idparticipante){
         Participante participante = partrep.getById(idparticipante);
@@ -34,6 +38,8 @@ public class ParticipanteController implements Serializable {
         
         List <Participacion> participaciones = participacionrep.findByIdParticipante(participante);
         model.addAttribute("participaciones", participaciones);
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         
         return "Participante.html";
     }

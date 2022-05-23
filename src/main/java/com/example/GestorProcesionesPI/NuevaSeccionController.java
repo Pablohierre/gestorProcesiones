@@ -7,6 +7,7 @@ package com.example.GestorProcesionesPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import models.Corporacion;
 import models.Procesion;
 import models.Seccion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class NuevaSeccionController implements Serializable {
     @Autowired
     SeccionRepository repsec;
     
+    @Autowired
+    CorporacionRepository repCorp;
+    
     ArrayList <Seccion> seccionesProcesion = new ArrayList <Seccion>();
     int numSeccionesGuardadas =0;
     
@@ -47,6 +51,8 @@ public class NuevaSeccionController implements Serializable {
             seccionesProcesion.add(seccionp);  //LE PASO a la vista UNA LISTA DE SECCIONES VACÍAS QUE SE dependen de la procesion Y se rellenan DESDE LA PLANTILLA          
         }
         
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
         System.out.println(seccionesProcesion.toString());
         model.addAttribute("seccionesProcesion",seccionesProcesion);
         model.addAttribute("procesion",ultimaCreada);
@@ -71,6 +77,8 @@ public class NuevaSeccionController implements Serializable {
         System.out.println("La lista de procesiones que se está mandando a la plantilla es: "+seccionesProcesion.toString());
         model.addAttribute("seccionesProcesion",seccionesProcesion);
         model.addAttribute("procesion", ultimaCreada);
+        Corporacion corporacion =  repCorp.findAll().get(0);
+        model.addAttribute("corporacion", corporacion);
 //         
          return "nuevaSeccion.html";
          
